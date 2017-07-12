@@ -1,0 +1,28 @@
+{
+  "name": "@fiverr/gofor",
+  "version": "1.0.0-rc.3",
+  "description": "lean fetch decorator that reverse merges default headers",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha test.js --inspect",
+    "prepublishOnly": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fiverr/gofor.git"
+  },
+  "author": "Fiverr",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/fiverr/gofor/issues"
+  },
+  "homepage": "https://github.com/fiverr/gofor#readme.md",
+  "devDependencies": {
+    "chai": "^4.1.0",
+    "mocha": "^3.4.2",
+    "node-fetch": "^1.7.1"
+  },
+  "dependencies": {
+    "@fiverr/futile": "^1.9.0"
+  }
+}

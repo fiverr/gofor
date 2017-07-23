@@ -1,7 +1,9 @@
 {
   "name": "@fiverr/gofor",
-  "version": "1.0.0-rc.3",
+  "version": "1.0.0",
   "description": "lean fetch decorator that reverse merges default headers",
+  "author": "Fiverr",
+  "license": "MIT",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha test.js --inspect",
@@ -11,8 +13,6 @@
     "type": "git",
     "url": "git+https://github.com/fiverr/gofor.git"
   },
-  "author": "Fiverr",
-  "license": "UNLICENSED",
   "bugs": {
     "url": "https://github.com/fiverr/gofor/issues"
   },

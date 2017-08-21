@@ -34,10 +34,8 @@ module.exports = class Gofor {
             this[defaults] = def;
             this.getDefaults = () => {
                 throw new TypeError('Gofor Error: Defaults have already been defined');
-            }
+            };
         }
-
-
     }
 
     /**
@@ -46,7 +44,9 @@ module.exports = class Gofor {
      * @readonly
      */
     get defaults() {
-        return this[defaults] = this[defaults] || this.getDefaults();
+        this[defaults] = this[defaults] || this.getDefaults();
+
+        return this[defaults];
     }
 
     set defaults(obj) {
@@ -77,4 +77,4 @@ module.exports = class Gofor {
 
         return fetch(...args);
     }
-}
+};

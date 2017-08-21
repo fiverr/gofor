@@ -12,5 +12,6 @@ const Gofor = require('./gofor');
  */
 module.exports = (...args) => {
     const instance = new Gofor(...args);
+
     return instance.fetch.bind(instance);
-}
+};

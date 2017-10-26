@@ -1,5 +1,7 @@
 # gofor
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/fiverr/gofor.svg)](https://greenkeeper.io/)
+
 [![npm](https://img.shields.io/npm/v/@fiverr/gofor.svg)](https://www.npmjs.com/package/@fiverr/gofor)
 [![CircleCI](https://img.shields.io/circleci/project/github/fiverr/gofor.svg)](https://circleci.com/gh/fiverr/gofor)
 [![GitHub issues](https://img.shields.io/github/issues/fiverr/gofor.svg)](https://github.com/fiverr/gofor/issues)

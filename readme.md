@@ -4,15 +4,14 @@
 [![CircleCI](https://img.shields.io/circleci/project/github/fiverr/gofor.svg)](https://circleci.com/gh/fiverr/gofor)
 [![GitHub issues](https://img.shields.io/github/issues/fiverr/gofor.svg)](https://github.com/fiverr/gofor/issues)
 
-[![bitHound Overall Score](https://www.bithound.io/github/fiverr/gofor/badges/score.svg)](https://www.bithound.io/github/fiverr/gofor)
-[![bitHound Dependencies](https://www.bithound.io/github/fiverr/gofor/badges/dependencies.svg)](https://www.bithound.io/github/fiverr/gofor/master/dependencies/npm)
-[![bitHound Dev Dependencies](https://www.bithound.io/github/fiverr/gofor/badges/devDependencies.svg)](https://www.bithound.io/github/fiverr/gofor/master/dependencies/npm)
-
 gofor is a (Gofor) factory interface for a lean fetch decorator that *deep reverse merges* default options.
 It means the headers you put in for each request will take precedence, but will supplemented with the defaults.
 It's fetch is [a fetch Promise](https://developer.mozilla.org/en/docs/Web/API/Fetch_API)
 
 The index is a factory, returning the wrapped fetch. It is recommended to use the factory method.
+
+## Install
+`npm i -S @fiverr/gofor`
 
 ## Use
 ### Create an instance:
@@ -39,5 +38,7 @@ gofor('/page', {
 }).then(...);
 ```
 
-## Install
-`npm i @fiverr/gofor`
+[![Greenkeeper badge](https://badges.greenkeeper.io/fiverr/gofor.svg)](https://greenkeeper.io/)
+[![bitHound Overall Score](https://www.bithound.io/github/fiverr/gofor/badges/score.svg)](https://www.bithound.io/github/fiverr/gofor)
+[![bitHound Dependencies](https://www.bithound.io/github/fiverr/gofor/badges/dependencies.svg)](https://www.bithound.io/github/fiverr/gofor/master/dependencies/npm)
+[![bitHound Dev Dependencies](https://www.bithound.io/github/fiverr/gofor/badges/devDependencies.svg)](https://www.bithound.io/github/fiverr/gofor/master/dependencies/npm)

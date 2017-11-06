@@ -1,15 +1,16 @@
 /**
  * @module gofor
  * @since 1.0.0
+ * @requires merge-headers
  */
-
-const deepassign = require('@fiverr/futile/lib/deepassign');
 
 /**
  * defaults symbol to be used as a private member
  * @type {Symbol}
  */
 const defaults = typeof Symbol === 'function' ? Symbol() : '_defaults';
+
+const mergeHeaders = require('../merge-headers');
 
 /**
  * @class Gofor
@@ -46,7 +47,23 @@ module.exports = class Gofor {
     get defaults() {
         this[defaults] = this[defaults] || this.getDefaults();
 
+        this.convertHeaders();
+
         return this[defaults];
+    }
+
+    convertHeaders() {
+        const headers = this[defaults].headers;
+
+        if (headers && !(headers instanceof Headers)) {
+            this[defaults].headers = new Headers();
+
+            Object.keys(headers).forEach(
+                (header) => this[defaults].headers.append(header, headers[header])
+            );
+        }
+
+        return this;
     }
 
     set defaults(obj) {
@@ -59,11 +76,14 @@ module.exports = class Gofor {
      * @return {Object} Original options supplemented with defaults
      */
     setOptions(opts = null) {
-        return opts ? deepassign(
-            {},
-            this.defaults,
-            opts
-        ) : this.defaults;
+        if (!opts) {
+            return this.defaults;
+        }
+
+        const options = Object.assign({}, this.defaults, opts);
+        options.headers = opts.headers ? mergeHeaders(opts.headers, this.defaults.headers) : this.defaults.headers;
+
+        return options;
     }
 
     /**

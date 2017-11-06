@@ -1,5 +1,6 @@
 const { assert } = require('chai');
 global.fetch = require('node-fetch');
+global.Headers = require('fetch-headers');
 
 const Gofor = require('./');
 
@@ -40,6 +41,15 @@ describe('Gofor/defaults', () => {
     });
 });
 
+describe('Gofor/headers', () => {
+    it('converts headers passed in as objects to Headers', () => {
+        const gofor = new Gofor(defaults);
+
+        assert(gofor.defaults.headers instanceof Headers);
+        assert.equal(gofor.defaults.headers.constructor.name, Headers.name);
+    });
+});
+
 describe('Gofor/setOptions', () => {
     const gofor = new Gofor(() => defaults);
 
@@ -48,13 +58,12 @@ describe('Gofor/setOptions', () => {
     });
 
     it('prefers passed in values, and assigns defaults to others', () => {
-        const options = gofor.setOptions({
-            headers: {
-                'Content-Type': 'text-plain'
-            }
-        });
-        assert.equal(options.headers['Content-Type'], 'text-plain');
-        assert.equal(options.headers['X-Custom-Authentication'], defaults.headers['X-Custom-Authentication']);
-        assert.equal(options.headers['X-Requested-With'], 'XMLHttpRequest');
+        const headers = new Headers();
+        headers.append('Content-Type', 'text-plain');
+
+        const options = gofor.setOptions({headers});
+        assert.equal(options.headers.get('Content-Type'), 'text-plain');
+        assert.equal(options.headers.get('X-Custom-Authentication'), defaults.headers.get('X-Custom-Authentication'));
+        assert.equal(options.headers.get('X-Requested-With'), 'XMLHttpRequest');
     });
 });

@@ -1,6 +1,6 @@
 {
   "name": "@fiverr/gofor",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "lean fetch decorator that reverse merges default options",
   "author": "Fiverr",
   "license": "MIT",
@@ -26,7 +26,5 @@
     "mocha": "^4.0.1",
     "node-fetch": "^1.7.1"
   },
-  "dependencies": {
-    "@fiverr/futile": "^1.9.0"
-  }
+  "dependencies": {}
 }

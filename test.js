@@ -1,6 +1,3 @@
-const { assert } = require('chai');
-global.fetch = require('node-fetch');
-
 const defaults = {
     credentials: 'same-origin',
     headers: {
@@ -26,7 +23,7 @@ describe('goforFactory', () => {
     it('Shoots a fetch request', (done) => {
         gofor('https://www.fiverr.com')
             .then((res) => {
-                assert.equal(res.url, 'https://www.fiverr.com');
+                assert.include(res.url, 'https://www.fiverr.com');
                 done();
             }).catch((error) => {
                 catcher(error);

@@ -1,6 +1,4 @@
-const { assert } = require('chai');
 const parseHeaders = require('./');
-global.Headers = require('fetch-headers');
 
 describe('parseHeaders', () => {
     it(
@@ -32,14 +30,15 @@ describe('parseHeaders', () => {
     });
 
     it('Chains identical keys\' values', () => {
-        const list = [
-            {a: '1,2'},
-        ];
-
         const headers = new Headers();
         headers.append('a', '1');
         headers.append('a', '2');
 
-        assert.deepEqual(parseHeaders(headers), list);
+        expect(parseHeaders(headers)).to.satisfy(
+            (res) => res[0]['a']
+                .split(',')
+                .map(i => i.trim())
+                .join(',') === '1,2'
+        );
     });
 });

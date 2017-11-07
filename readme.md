@@ -17,14 +17,14 @@ The index is a factory, returning the wrapped fetch. It is recommended to use th
 ### Create an instance:
 ```javascript
 const goforFactory = require('@fiverr/gofor');
+const defaultHeaders = new Headers();
+defaultHeaders.append('X-Requested-With', 'XMLHttpRequest');
+defaultHeaders.append('Content-Type', 'application/json; charset=utf-8');
+defaultHeaders.append('Accept', 'application/json');
 
 const gofor = goforFactory({
     credentials: 'same-origin',
-    headers: {
-        'X-Requested-With': 'XMLHttpRequest',
-        'Content-Type': 'application/json; charset=utf-8',
-        'Accept': 'application/json'
-    }
+    headers: defaultHeaders
 });
 
 // Use only defaults
@@ -37,6 +37,32 @@ gofor('/page', {
     }
 }).then(...);
 ```
+
+### Supports headers as object literals or Headers instances
+**Default header keys will be run over if matched by passed in header keys**. Other keys will be merged. This is made by design.
+
+##### Example
+```js
+const gofor = goforFactory({
+    credentials: 'same-origin',
+    headers: new Headers({
+        'Content-Type': 'application/json; charset=utf-8',
+        'X-Custom-Header': 'Custom-Value'
+    })
+});
+
+gofor('/page', {
+    headers: new Headers({
+        'Content-Type': 'text/plain',
+    })
+});
+```
+Final headers will be:
+```js
+    'Content-Type': 'text/plain',
+    'X-Custom-Header': 'Custom-Value'
+```
+
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/fiverr/gofor.svg)](https://greenkeeper.io/)
 [![bitHound Overall Score](https://www.bithound.io/github/fiverr/gofor/badges/score.svg)](https://www.bithound.io/github/fiverr/gofor)

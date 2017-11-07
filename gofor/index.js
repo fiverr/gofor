@@ -10,6 +10,7 @@
  */
 const defaults = typeof Symbol === 'function' ? Symbol() : '_defaults';
 
+const toHeaders = require('../to-headers');
 const mergeHeaders = require('../merge-headers');
 
 /**
@@ -29,13 +30,26 @@ module.exports = class Gofor {
                     throw new TypeError('Gofor Error: Defaults getter must return an object');
                 }
 
+                this.convertHeaders();
+
                 return res;
             };
         } else {
             this[defaults] = def;
+            this.convertHeaders();
             this.getDefaults = () => {
                 throw new TypeError('Gofor Error: Defaults have already been defined');
             };
+        }
+    }
+
+    /**
+     * Convert self's literal headers to Headers when applicable
+     * no return value
+     */
+    convertHeaders() {
+        if (this[defaults] && this[defaults].headers) {
+            this[defaults].headers = toHeaders(this[defaults].headers);
         }
     }
 
@@ -47,23 +61,7 @@ module.exports = class Gofor {
     get defaults() {
         this[defaults] = this[defaults] || this.getDefaults();
 
-        this.convertHeaders();
-
         return this[defaults];
-    }
-
-    convertHeaders() {
-        const headers = this[defaults].headers;
-
-        if (headers && !(headers instanceof Headers)) {
-            this[defaults].headers = new Headers();
-
-            Object.keys(headers).forEach(
-                (header) => this[defaults].headers.append(header, headers[header])
-            );
-        }
-
-        return this;
     }
 
     set defaults(obj) {
@@ -81,7 +79,12 @@ module.exports = class Gofor {
         }
 
         const options = Object.assign({}, this.defaults, opts);
-        options.headers = opts.headers ? mergeHeaders(opts.headers, this.defaults.headers) : this.defaults.headers;
+
+        if (this.defaults.headers && opts.headers) {
+            const headers = toHeaders(opts.headers);
+
+            options.headers = headers instanceof Headers ? mergeHeaders(headers, this.defaults.headers) : this.defaults.headers;
+        }
 
         return options;
     }

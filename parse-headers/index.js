@@ -1,6 +1,9 @@
 /**
  * @module parseHeaders
+ * @private
  * @since 1.1.0
+ *
+ * Currently being used in test environment only
  */
 
 /**

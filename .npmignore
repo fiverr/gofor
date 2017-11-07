@@ -1,4 +1,6 @@
-*
-!index.js
-!gofor.js
+.*
+test.js
+test-helpers.js
+**/test.js
+server
 !readme.md

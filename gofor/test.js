@@ -1,7 +1,3 @@
-const { assert } = require('chai');
-global.fetch = require('node-fetch');
-global.Headers = require('fetch-headers');
-
 const Gofor = require('./');
 
 const defaults = {

@@ -1,6 +1,7 @@
 /**
  * @module index (goforFactory)
  * @since 1.0.0
+ * @requires gofor
  */
 
 const Gofor = require('./gofor');

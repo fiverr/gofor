@@ -1,28 +1,29 @@
 {
   "name": "@fiverr/gofor",
-  "version": "1.0.0",
-  "description": "lean fetch decorator that reverse merges default headers",
+  "version": "1.1.0",
+  "description": "lean fetch decorator that reverse merges default options",
   "author": "Fiverr",
   "license": "MIT",
   "main": "index.js",
+  "engines": {
+    "node": ">=6.9.4"
+  },
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha test.js --inspect",
-    "prepublishOnly": "npm test"
+    "test": "./node_modules/mocha/bin/mocha test.js **/test.js --inspect --require test-helpers.js",
+    "lint": "./node_modules/eslint/bin/eslint.js -c .eslintrc *.js **/*.js --quiet",
+    "prepublishOnly": "npm t && npm run lint"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fiverr/gofor.git"
   },
-  "bugs": {
-    "url": "https://github.com/fiverr/gofor/issues"
-  },
-  "homepage": "https://github.com/fiverr/gofor#readme.md",
   "devDependencies": {
-    "chai": "^4.1.0",
+    "@fiverr/eslint-config-fiverr": "0.0.18",
+    "chai": "^4.1.2",
+    "eslint": "^4.10.0",
+    "eslint-plugin-react": "^7.4.0",
     "mocha": "^4.0.1",
-    "node-fetch": "^1.7.1"
+    "node-fetch": "^2.0.0-alpha.9"
   },
-  "dependencies": {
-    "@fiverr/futile": "^1.9.0"
-  }
+  "dependencies": {}
 }

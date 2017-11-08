@@ -1,15 +1,17 @@
 /**
  * @module gofor
  * @since 1.0.0
+ * @requires merge-headers
  */
-
-const deepassign = require('@fiverr/futile/lib/deepassign');
 
 /**
  * defaults symbol to be used as a private member
  * @type {Symbol}
  */
 const defaults = typeof Symbol === 'function' ? Symbol() : '_defaults';
+
+const toHeaders = require('../to-headers');
+const mergeHeaders = require('../merge-headers');
 
 /**
  * @class Gofor
@@ -28,13 +30,26 @@ module.exports = class Gofor {
                     throw new TypeError('Gofor Error: Defaults getter must return an object');
                 }
 
+                this.convertHeaders();
+
                 return res;
             };
         } else {
             this[defaults] = def;
+            this.convertHeaders();
             this.getDefaults = () => {
                 throw new TypeError('Gofor Error: Defaults have already been defined');
             };
+        }
+    }
+
+    /**
+     * Convert self's literal headers to Headers when applicable
+     * no return value
+     */
+    convertHeaders() {
+        if (this[defaults] && this[defaults].headers) {
+            this[defaults].headers = toHeaders(this[defaults].headers);
         }
     }
 
@@ -59,11 +74,19 @@ module.exports = class Gofor {
      * @return {Object} Original options supplemented with defaults
      */
     setOptions(opts = null) {
-        return opts ? deepassign(
-            {},
-            this.defaults,
-            opts
-        ) : this.defaults;
+        if (!opts) {
+            return this.defaults;
+        }
+
+        const options = Object.assign({}, this.defaults, opts);
+
+        if (this.defaults.headers && opts.headers) {
+            const headers = toHeaders(opts.headers);
+
+            options.headers = headers instanceof Headers ? mergeHeaders(headers, this.defaults.headers) : this.defaults.headers;
+        }
+
+        return options;
     }
 
     /**

@@ -68,7 +68,7 @@ Gofor is designed for the browser, and depends on the fetch API.
 
 In order to use gofor in node, you must have a polyfill for [fetch](https://www.npmjs.com/package/node-fetch)].
 
-```
+```js
 const fetch = require('node-fetch');
 
 // Comply with browser environment, add Headers, Request, Response

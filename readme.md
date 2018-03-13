@@ -63,6 +63,22 @@ Final headers will be:
     'X-Custom-Header': 'Custom-Value'
 ```
 
+## Node Runtime
+Gofor is designed for the browser, and depends on the fetch API.
+
+In order to use gofor in node, you must have a polyfill for [fetch](https://www.npmjs.com/package/node-fetch)].
+
+```
+const fetch = require('node-fetch');
+
+// Comply with browser environment, add Headers, Request, Response
+Object.assign(global, {fetch}, fetch);
+```
+
+## Troubleshooting
+
+#### `.entries is not a function`
+ `Object.entries` is available in node version >= `7.5.0`,
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/fiverr/gofor.svg)](https://greenkeeper.io/)
 [![bitHound Overall Score](https://www.bithound.io/github/fiverr/gofor/badges/score.svg)](https://www.bithound.io/github/fiverr/gofor)

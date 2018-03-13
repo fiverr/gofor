@@ -70,9 +70,10 @@ In order to use gofor in node, you must have a polyfill for [fetch](https://www.
 
 ```js
 const fetch = require('node-fetch');
+const {Headers, Request, Response} = fetch
 
-// Comply with browser environment, add Headers, Request, Response
-Object.assign(global, {fetch}, fetch);
+// Comply with browser environment
+Object.assign(global, {fetch, Headers, Request, Response});
 ```
 
 ## Troubleshooting

@@ -10,6 +10,10 @@
  * @return {Headers}
  */
 module.exports = function mergeHeaders(submitted, defaults) {
+    if (typeof Headers !== 'function') {
+        return Object.assign({}, defaults, submitted);
+    }
+
     const headers = new Headers();
     const keys = [];
 
@@ -32,6 +36,10 @@ module.exports = function mergeHeaders(submitted, defaults) {
  * no return value
  */
 function iterate(iterator, fn) {
+    if (!(iterator instanceof Headers)) {
+        return Object.entries(iterator).forEach((entry) => fn(...entry));
+    }
+
     const entries = iterator.entries();
     let pair;
 

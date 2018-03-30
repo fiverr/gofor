@@ -1,6 +1,6 @@
 {
   "name": "@fiverr/gofor",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "lean fetch decorator that reverse merges default options",
   "author": "Fiverr",
   "license": "MIT",
@@ -9,8 +9,8 @@
     "node": ">=6.9.4"
   },
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha test.js **/test.js --inspect --require test-helpers.js",
-    "lint": "./node_modules/eslint/bin/eslint.js -c .eslintrc *.js **/*.js --quiet",
+    "test": "mocha test.js **/test.js --inspect --require test-helpers.js",
+    "lint": "eslint -c .eslintrc *.js **/*.js --quiet",
     "prepublishOnly": "npm t && npm run lint"
   },
   "repository": {
@@ -20,10 +20,10 @@
   "devDependencies": {
     "@fiverr/eslint-config-fiverr": "^1.0.0",
     "chai": "^4.1.2",
-    "eslint": "^4.18.2",
+    "eslint": "^4.19.1",
     "eslint-plugin-react": "^7.7.0",
-    "mocha": "^5.0.1",
-    "node-fetch": "^2.1.1"
+    "mocha": "^5.0.5",
+    "node-fetch": "^2.1.2"
   },
   "dependencies": {}
 }

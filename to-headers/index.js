@@ -10,7 +10,7 @@
  * @return {Headers|Any}
  */
 module.exports = (headers) => {
-    if (headers && typeof headers === 'object' && headers !== null && !(headers instanceof Headers)) {
+    if (headers && typeof headers === 'object' && headers !== null && supportsHeaders() && !(headers instanceof Headers)) {
         const result = new Headers();
 
         Object.keys(headers).forEach(
@@ -22,3 +22,5 @@ module.exports = (headers) => {
 
     return headers;
 };
+
+const supportsHeaders = () => typeof Headers === 'function';

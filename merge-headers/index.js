@@ -37,7 +37,7 @@ module.exports = function mergeHeaders(submitted, defaults) {
  */
 function iterate(iterator, fn) {
     if (!(iterator instanceof Headers)) {
-        return Object.entries(iterator).forEach((entry) => fn(...entry));
+        return Object.keys(iterator).forEach((key) => fn(key, iterator[key]));
     }
 
     const entries = iterator.entries();

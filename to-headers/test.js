@@ -15,7 +15,11 @@ describe('toHeaders', () => {
     });
 
     it('Does not convert headers when Headers is unavailable', () => {
+        delete require.cache[require.resolve('.')];
+        delete require.cache[require.resolve('../supports-headers')];
         delete global.Headers;
+
+        const toHeaders = require('./');
         const headers = toHeaders({a: 1});
         expect(headers.keys).to.not.be.a('function');
     });

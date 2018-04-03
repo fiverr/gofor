@@ -4,13 +4,15 @@
  * @since 1.1.0
  */
 
+const supportsHeaders = require('../supports-headers');
+
 /**
  * Merge Headers values
  * @param  {...Headers} headerses
  * @return {Headers}
  */
 module.exports = function mergeHeaders(submitted, defaults) {
-    if (typeof Headers !== 'function') {
+    if (!supportsHeaders()) {
         return Object.assign({}, defaults, submitted);
     }
 

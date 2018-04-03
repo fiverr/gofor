@@ -4,6 +4,8 @@
  * @since 1.1.0
  */
 
+const supportsHeaders = require('../supports-headers');
+
 /**
  * Convert object literal representation of headers to a Headers instance. Return everything else as is
  * @param  {Object|Headers|Any} headers A Headers instance or object literal representation of it
@@ -22,5 +24,3 @@ module.exports = (headers) => {
 
     return headers;
 };
-
-const supportsHeaders = () => typeof Headers === 'function';

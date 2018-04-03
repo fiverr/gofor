@@ -47,8 +47,14 @@ describe('Gofor/headers', () => {
     });
 
     it('When Headers is not available, new values override defaults', () => {
-        let called = false;
+        delete require.cache[require.resolve('.')];
+        delete require.cache[require.resolve('../to-headers')];
+        delete require.cache[require.resolve('../merge-headers')];
+        delete require.cache[require.resolve('../supports-headers')];
+
         delete global.Headers;
+        const Gofor = require('./');
+        let called = false;
 
         global.fetch = (url, {headers}) => {
             expect(headers['X-Requested-With']).to.equal('fetch');

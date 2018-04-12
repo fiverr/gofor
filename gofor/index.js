@@ -83,7 +83,7 @@ module.exports = class Gofor {
         if (this.defaults.headers && opts.headers) {
             const headers = toHeaders(opts.headers);
 
-            options.headers = headers instanceof Headers ? mergeHeaders(headers, this.defaults.headers) : this.defaults.headers;
+            options.headers = mergeHeaders(headers, this.defaults.headers);
         }
 
         return options;

@@ -4,12 +4,18 @@
  * @since 1.1.0
  */
 
+const supportsHeaders = require('../supports-headers');
+
 /**
  * Merge Headers values
  * @param  {...Headers} headerses
  * @return {Headers}
  */
 module.exports = function mergeHeaders(submitted, defaults) {
+    if (!supportsHeaders()) {
+        return Object.assign({}, defaults, submitted);
+    }
+
     const headers = new Headers();
     const keys = [];
 
@@ -32,6 +38,10 @@ module.exports = function mergeHeaders(submitted, defaults) {
  * no return value
  */
 function iterate(iterator, fn) {
+    if (!(iterator instanceof Headers)) {
+        return Object.keys(iterator).forEach((key) => fn(key, iterator[key]));
+    }
+
     const entries = iterator.entries();
     let pair;
 

@@ -12,7 +12,7 @@ const supportsHeaders = require('../supports-headers');
  * @return {Headers|Any}
  */
 module.exports = (headers) => {
-    if (headers && typeof headers === 'object' && headers !== null && supportsHeaders() && !(headers instanceof Headers)) {
+    if (headers && typeof headers === 'object' && supportsHeaders() && !(headers instanceof Headers)) {
         const result = new Headers();
 
         Object.keys(headers).forEach(

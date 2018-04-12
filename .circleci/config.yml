@@ -1,27 +1,69 @@
 defaults: &defaults
   working_directory: ~/app
-  docker:
-    - image: circleci/node:6.11.5
-    - image: circleci/node:8.9.0
 
 version: 2
 jobs:
-  test:
+  install:
     <<: *defaults
+    docker:
+      - image: circleci/node:6.11.5
+      - image: circleci/node:8.9.0
     steps:
       - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
       - run:
-          name: npm i
+          name: Set NPM user
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+      - run:
+          name: Install dependencies
           command: npm i
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+  test:
+    <<: *defaults
+    docker:
+      - image: circleci/node:6.11.5
+      - image: circleci/node:8.9.0
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
       - run:
-          name: npm t
+          name: Run tests
           command: npm t
       - run:
-          name: lint
+          name: Lint code
           command: npm run lint
+  publish:
+    <<: *defaults
+    docker:
+      - image: circleci/node:8.9.0
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Set NPM user
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+      - run:
+          name: Publish to NPM
+          command: npx published
 
 workflows:
   version: 2
   ci-cd:
     jobs:
-      - test
+      - install
+      - test:
+          requires:
+            - install
+      - publish:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - master

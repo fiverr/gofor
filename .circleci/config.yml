@@ -7,14 +7,11 @@ jobs:
     <<: *defaults
     docker:
       - image: circleci/node:6.11.5
-      - image: circleci/node:8.9.0
+      - image: circleci/node:8
     steps:
       - checkout
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
-      - run:
-          name: Set NPM user
-          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
       - run:
           name: Install dependencies
           command: npm i
@@ -26,7 +23,7 @@ jobs:
     <<: *defaults
     docker:
       - image: circleci/node:6.11.5
-      - image: circleci/node:8.9.0
+      - image: circleci/node:8
     steps:
       - checkout
       - restore_cache:
@@ -40,14 +37,14 @@ jobs:
   publish:
     <<: *defaults
     docker:
-      - image: circleci/node:8.9.0
+      - image: circleci/node:8
     steps:
       - checkout
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
-          name: Set NPM user
-          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+          name: Set NPM tokens
+          command: echo -e $NPMRC > ~/.npmrc
       - run:
           name: Publish to NPM
           command: npx published
@@ -61,6 +58,7 @@ workflows:
           requires:
             - install
       - publish:
+          context: org-global
           requires:
             - test
           filters:

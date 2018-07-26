@@ -31,3 +31,21 @@ describe('goforFactory', () => {
             });
     });
 });
+
+describe('gofor instance', () => {
+    it('creates new instanced of gofor', () => {
+        const {gofor} = require('.');
+        const gofor2 = require('.').gofor;
+
+        expect(gofor2).to.not.equal(gofor);
+
+        expect(gofor.config()).to.not.have.key('headers');
+
+        gofor.config({
+            headers: {'Content-Type': 'text-plain'}
+        });
+
+        expect(gofor.config()).to.have.key('headers');
+        expect(gofor2.config()).to.not.have.key('headers');
+    });
+});

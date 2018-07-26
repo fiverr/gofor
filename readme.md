@@ -1,8 +1,8 @@
 # gofor
 
-[![npm](https://img.shields.io/npm/v/@fiverr/gofor.svg)](https://www.npmjs.com/package/@fiverr/gofor)
-[![CircleCI](https://img.shields.io/circleci/project/github/fiverr/gofor.svg)](https://circleci.com/gh/fiverr/gofor)
-[![GitHub issues](https://img.shields.io/github/issues/fiverr/gofor.svg)](https://github.com/fiverr/gofor/issues)
+[![](https://img.shields.io/npm/v/@fiverr/gofor.svg)](https://www.npmjs.com/package/@fiverr/gofor)
+[![](https://img.shields.io/circleci/project/github/fiverr/gofor.svg)](https://circleci.com/gh/fiverr/gofor)
+[![](https://badges.greenkeeper.io/fiverr/gofor.svg)](https://greenkeeper.io/)
 
 gofor is a (Gofor) factory interface for a lean fetch decorator that *deep reverse merges* default options.
 It means the headers you put in for each request will take precedence, but will supplemented with the defaults.
@@ -14,15 +14,23 @@ The index is a factory, returning the wrapped fetch. It is recommended to use th
 `npm i -S @fiverr/gofor`
 
 ## Use
-### Create an instance:
+### Instances are usable straight "out of the box"
+```js
+const {gofor} = require('@fiverr/gofor');
+gofor('/page', {headers: {'X-Custom-Header': 'Custom-Value'}})
+    .then(...)
+    .catch(...);
+```
+
+### Get an instance and configure it:
 ```javascript
-const goforFactory = require('@fiverr/gofor');
+const {gofor} = require('@fiverr/gofor');
 const defaultHeaders = new Headers();
 defaultHeaders.append('X-Requested-With', 'XMLHttpRequest');
 defaultHeaders.append('Content-Type', 'application/json; charset=utf-8');
 defaultHeaders.append('Accept', 'application/json');
 
-const gofor = goforFactory({
+gofor.config({
     credentials: 'same-origin',
     headers: defaultHeaders
 });
@@ -43,7 +51,7 @@ gofor('/page', {
 
 ##### Example
 ```js
-const gofor = goforFactory({
+gofor.config({
     credentials: 'same-origin',
     headers: new Headers({
         'Content-Type': 'application/json; charset=utf-8',
@@ -63,6 +71,14 @@ Final headers will be:
     'X-Custom-Header': 'Custom-Value'
 ```
 
+### Each gofor getter creates a new instance
+```js
+const gofor1 = require('@fiverr/gofor').gofor;
+const gofor2 = require('@fiverr/gofor').gofor;
+
+gofor1 === gofor2 // false
+```
+
 ## Node Runtime
 Gofor is designed for the browser, and depends on the fetch API.
 
@@ -80,8 +96,3 @@ Object.assign(global, {fetch, Headers, Request, Response});
 
 #### `.entries is not a function`
  `Object.entries` is available in node version >= `7.5.0`,
-
-[![Greenkeeper badge](https://badges.greenkeeper.io/fiverr/gofor.svg)](https://greenkeeper.io/)
-[![bitHound Overall Score](https://www.bithound.io/github/fiverr/gofor/badges/score.svg)](https://www.bithound.io/github/fiverr/gofor)
-[![bitHound Dependencies](https://www.bithound.io/github/fiverr/gofor/badges/dependencies.svg)](https://www.bithound.io/github/fiverr/gofor/master/dependencies/npm)
-[![bitHound Dev Dependencies](https://www.bithound.io/github/fiverr/gofor/badges/devDependencies.svg)](https://www.bithound.io/github/fiverr/gofor/master/dependencies/npm)

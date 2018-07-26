@@ -19,7 +19,7 @@ describe('parseHeaders', () => {
     it('converts Headers to literal object', () => {
         const list = [
             {a: '1'},
-            {b: '2'},
+            {b: '2'}
         ];
 
         const headers = new Headers();
@@ -35,9 +35,9 @@ describe('parseHeaders', () => {
         headers.append('a', '2');
 
         expect(parseHeaders(headers)).to.satisfy(
-            (res) => res[0]['a']
+            (res) => res[0].a
                 .split(',')
-                .map(i => i.trim())
+                .map((i) => i.trim())
                 .join(',') === '1,2'
         );
     });

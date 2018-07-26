@@ -18,5 +18,18 @@
   "plugins": [],
   "rules": {
     "no-console": 0
-  }
+  },
+  "overrides": [
+    {
+      "files": [ "test.js", "**/test.js", "test-helpers.js" ],
+      "env": {
+        "mocha": true
+      },
+      "globals": {
+        "global": true,
+        "expect": true,
+        "assert": true
+      }
+    }
+  ]
 }

@@ -10,7 +10,7 @@ const defaults = {
 
 const catcher = (error) => {
     console.warn(`${error.name} (${error.code}): ${error.message}`);
-    return new Promise(res => res());
+    return new Promise((res) => res());
 };
 
 const goforFactory = require('./');

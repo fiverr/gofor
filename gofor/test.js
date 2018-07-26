@@ -33,7 +33,7 @@ describe('Gofor/defaults', () => {
     });
     it('defaults getter methods must return objects', () => {
         assert.throws(() => (new Gofor(() => null)).fetch('https://www.website.com'), TypeError);
-        assert.throws(() => (new Gofor(() => ''  )).fetch('https://www.website.com'), TypeError);
+        assert.throws(() => (new Gofor(() => '')).fetch('https://www.website.com'), TypeError);
     });
 });
 
@@ -59,7 +59,7 @@ describe('Gofor/headers', () => {
         global.fetch = (url, {headers}) => {
             expect(headers['X-Requested-With']).to.equal('fetch');
             called = true;
-        }
+        };
 
         const gofor = new Gofor(defaults());
         gofor.fetch('/', {headers: {

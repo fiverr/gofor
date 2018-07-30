@@ -36,7 +36,7 @@ module.exports = class TestServer {
         this.node.keepAliveTimeout = 1000;
         this.node.listen(this.port);
 
-        this.node.on('error', (error) => console.error(error.stack));
+        this.node.on('error', (error) => console.error(error.stack)); // eslint-disable-line no-console
 
         this.node.on('connection', (socket) => socket.setTimeout(1500));
 

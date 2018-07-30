@@ -6,19 +6,14 @@
       "impliedStrict": true
     }
   },
-  "env": {},
-  "globals": {
-    "require": true,
-    "module": true
+  "env": {
+    "node": true
   },
   "extends": [
     "@fiverr/eslint-config-fiverr/rules/base",
     "@fiverr/eslint-config-fiverr/rules/es6"
   ],
   "plugins": [],
-  "rules": {
-    "no-console": 0
-  },
   "overrides": [
     {
       "files": [ "test.js", "**/test.js", "test-helpers.js" ],
@@ -29,6 +24,9 @@
         "global": true,
         "expect": true,
         "assert": true
+      },
+      "rules": {
+        "no-console": 0
       }
     }
   ]

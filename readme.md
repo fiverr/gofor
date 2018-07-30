@@ -79,6 +79,23 @@ const gofor2 = require('@fiverr/gofor').gofor;
 gofor1 === gofor2 // false
 ```
 
+### Gofor Factory: Create an instance using delayed configuration getter
+The function will be called once on first use, and its result will be memoised.
+
+```js
+const goforFactory = require('@fiverr/gofor');
+
+const gofor = goforFactory(() => ({
+    credentials: 'same-origin',
+    headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'Content-Type': 'application/json; charset=utf-8',
+        'Accept': 'application/json',
+        'X-Custom-Secret': document.getElementById('secret').value,
+    },
+}));
+```
+
 ## Node Runtime
 Gofor is designed for the browser, and depends on the fetch API.
 

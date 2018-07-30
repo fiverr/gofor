@@ -73,10 +73,6 @@ workflows:
           context: org-global
           requires:
             - test
-          filters:
-            branches:
-              only:
-                - master
       - glossary:
           context: org-global
           requires:

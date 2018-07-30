@@ -19,9 +19,9 @@ describe('mergeHeaders', () => {
         defaults.append('key4', '4');
 
         const keys = parseHeaders(mergeHeaders(submitted, defaults))
-            .map(item => Object.keys(item)[0]);
+            .map((item) => Object.keys(item)[0]);
 
-        expect(keys).to.deep.equal(['key1','key2','key3','key4']);
+        expect(keys).to.deep.equal(['key1', 'key2', 'key3', 'key4']);
     });
 
     it('merges identical keys from both headers', () => {
@@ -34,9 +34,9 @@ describe('mergeHeaders', () => {
         defaults.append('key2', '4');
 
         const keys = parseHeaders(mergeHeaders(submitted, defaults))
-            .map(item => Object.keys(item)[0])
+            .map((item) => Object.keys(item)[0]);
 
-        expect(keys).to.deep.equal(['key1','key2']);
+        expect(keys).to.deep.equal(['key1', 'key2']);
     });
 
     it('Does not merge keys\' values. Submitted run over defaults', () => {
@@ -49,7 +49,7 @@ describe('mergeHeaders', () => {
         defaults.append('key2', '4');
 
         const values = parseHeaders(mergeHeaders(submitted, defaults))
-            .map(item => Object.values(item)[0]);
+            .map((item) => Object.values(item)[0]);
 
         expect(values).to.deep.equal(['1', '2']);
     });
@@ -62,7 +62,7 @@ describe('mergeHeaders', () => {
         defaults.append('keY1', '3');
 
         const values = parseHeaders(mergeHeaders(submitted, defaults))
-            .map(item => Object.values(item)[0]);
+            .map((item) => Object.values(item)[0]);
 
         expect(values).to.deep.equal(['1']);
     });

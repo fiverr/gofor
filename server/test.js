@@ -13,7 +13,7 @@ describe('E2E test', () => {
                 testServer.exec(
                     () => {
                         gofor(`http://localhost:${PORT}`)
-                            .catch(error => {
+                            .catch((error) => {
                                 assert(false, error);
                                 done();
                             });
@@ -31,7 +31,7 @@ describe('E2E test', () => {
                 testServer.exec(
                     () => {
                         gofor(`http://localhost:${PORT}`, {headers: {'X-Custom-Header-A': 'Custom-Value-A'}})
-                            .catch(error => {
+                            .catch((error) => {
                                 assert(false, error);
                                 done();
                             });
@@ -50,8 +50,8 @@ describe('E2E test', () => {
                 testServer.exec(
                     () => {
                         gofor(`http://localhost:${PORT}`, {headers: {'X-Custom-Header-A': 'Custom-Value-A',
-                                'X-Custom-Header': 'Custom-Value-X'}})
-                            .catch(error => {
+                            'X-Custom-Header': 'Custom-Value-X'}})
+                            .catch((error) => {
                                 assert(false, error);
                                 done();
                             });
@@ -77,7 +77,7 @@ describe('E2E test', () => {
                 testServer.exec(
                     () => {
                         gofor(`http://localhost:${PORT}`)
-                            .catch(error => {
+                            .catch((error) => {
                                 assert(false, error);
                                 done();
                             });
@@ -98,7 +98,7 @@ describe('E2E test', () => {
                 testServer.exec(
                     () => {
                         gofor(`http://localhost:${PORT}`, {headers})
-                            .catch(error => {
+                            .catch((error) => {
                                 assert(false, error);
                                 done();
                             });
@@ -123,7 +123,7 @@ describe('E2E test', () => {
                 testServer.exec(
                     () => {
                         gofor(`http://localhost:${PORT}`, {headers: supplied})
-                            .catch(error => {
+                            .catch((error) => {
                                 assert(false, error);
                                 done();
                             });

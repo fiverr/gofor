@@ -33,7 +33,7 @@ describe('Gofor/defaults', () => {
     });
     it('defaults getter methods must return objects', () => {
         assert.throws(() => (new Gofor(() => null)).fetch('https://www.website.com'), TypeError);
-        assert.throws(() => (new Gofor(() => ''  )).fetch('https://www.website.com'), TypeError);
+        assert.throws(() => (new Gofor(() => '')).fetch('https://www.website.com'), TypeError);
     });
 });
 
@@ -59,7 +59,7 @@ describe('Gofor/headers', () => {
         global.fetch = (url, {headers}) => {
             expect(headers['X-Requested-With']).to.equal('fetch');
             called = true;
-        }
+        };
 
         const gofor = new Gofor(defaults());
         gofor.fetch('/', {headers: {
@@ -83,6 +83,23 @@ describe('Gofor/setOptions', () => {
         headers.append('Content-Type', 'text-plain');
 
         const options = gofor.setOptions({headers});
+        assert.equal(options.headers.get('Content-Type'), 'text-plain');
+        assert.equal(options.headers.get('X-Custom-Authentication'), defaults().headers['X-Custom-Authentication']);
+        assert.equal(options.headers.get('X-Requested-With'), 'XMLHttpRequest');
+    });
+});
+
+describe('gofor.config', () => {
+    const gofor = new Gofor(() => defaults());
+    const {fetch} = gofor;
+
+    it('Should modify the defaults', () => {
+        const headers = new Headers();
+        headers.append('Content-Type', 'text-plain');
+
+        fetch.config({headers});
+
+        const options = gofor.defaults;
         assert.equal(options.headers.get('Content-Type'), 'text-plain');
         assert.equal(options.headers.get('X-Custom-Authentication'), defaults().headers['X-Custom-Authentication']);
         assert.equal(options.headers.get('X-Requested-With'), 'XMLHttpRequest');

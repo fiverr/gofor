@@ -48,6 +48,18 @@ jobs:
       - run:
           name: Publish to NPM
           command: npx published
+  glossary:
+    <<: *defaults
+    machine: true
+    steps:
+      - run:
+          name: Add to Glossary
+          command: |
+            curl --user ${CIRCLECI_API_TOKEN}: \
+              --header "Content-Type: application/json" \
+              --data "{\"build_parameters\":{\"TRIGGERING_REPOSITORY\":\"${CIRCLE_REPOSITORY_URL}\"}}" \
+              --request POST \
+              https://circleci.com/api/v1.1/project/github/fiverr/glossary/tree/master
 
 workflows:
   version: 2
@@ -61,6 +73,14 @@ workflows:
           context: org-global
           requires:
             - test
+          filters:
+            branches:
+              only:
+                - master
+      - glossary:
+          context: org-global
+          requires:
+            - publish
           filters:
             branches:
               only:

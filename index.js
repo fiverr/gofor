@@ -11,8 +11,11 @@ const Gofor = require('./gofor');
  * @param  {Object|Function} def[] See Gofor constructor interface
  * @return {fetch} A wrapper Gofor fetch
  */
-module.exports = (...args) => {
-    const instance = new Gofor(...args);
-
-    return instance.fetch.bind(instance);
-};
+module.exports = (...args) => new Gofor(...args).fetch;
+Object.defineProperties(
+    module.exports,
+    {
+        fetch: { get: () => new Gofor().fetch },
+        gofor: { get: () => new Gofor().fetch }
+    }
+);

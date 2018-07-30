@@ -41,6 +41,20 @@ module.exports = class Gofor {
                 throw new TypeError('Gofor Error: Defaults have already been defined');
             };
         }
+
+        /**
+         * fetch wrapper
+         * @param  {String} url       Implied by fetch API
+         * @param  {Object} options[] Implied by fetch API
+         * @return {Promise}          A fetch promise
+         */
+        this.fetch = (...args) => {
+            args[1] = this.setOptions(args[1]);
+
+            return fetch(...args);
+        };
+
+        this.fetch.config = this.config.bind(this);
     }
 
     /**
@@ -89,15 +103,9 @@ module.exports = class Gofor {
         return options;
     }
 
-    /**
-     * [fetch description]
-     * @param  {String} url       Implied by fetch API
-     * @param  {Object} options[] Implied by fetch API
-     * @return {Promise}          A fetch promise
-     */
-    fetch(...args) {
-        args[1] = this.setOptions(args[1]);
+    config(opts = null) {
+        this[defaults] = this.setOptions(opts);
 
-        return fetch(...args);
+        return this[defaults];
     }
 };

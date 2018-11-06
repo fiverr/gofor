@@ -20,7 +20,7 @@
     "prepublishOnly": "npm t && npm run lint"
   },
   "dependencies": {
-    "node-fetch": "^2.2.0"
+    "node-fetch": "^2.2.1"
   },
   "devDependencies": {
     "@fiverr/eslint-config-fiverr": "^1.0.0",

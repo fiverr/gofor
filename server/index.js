@@ -1,47 +1,26 @@
-const http = require('http');
-const noop = () => {}; // eslint-disable-line no-empty-function
+/**
+ * @module gofor/node
+ * @since 2.0.0
+ * @requires gofor
+ */
+
+const fetch = require('node-fetch');
+const Gofor = require('../src');
 
 /**
- * TestServer
- * @private
- * @param {number} [port]
+ * @class GoforNode
+ * @classdesc Returns a wrapper with a "fetch" method decorator that *reverse merges* default headers
+ *
+ * @param  {Object|Function} def Either the default headers or a method to be called one time and returns the default headers object
  */
-module.exports = class TestServer {
-    constructor(port = 1337) {
-        this.port = port;
-        this.node = null;
+class GoforNode extends Gofor {
+    get fetcher() {
+        return fetch;
     }
 
-    /**
-     * Executes a test on a server
-     * @param  {Function} premise
-     * @param  {Function} test
-     * no return value
-     */
-    exec(premise = noop, test = noop, done = noop) {
-        this.node && this.node.close();
-
-        this.node = http.createServer((request, response) => {
-            setTimeout(() => {
-                this.node.close();
-                done();
-            }, 300);
-
-            test(request);
-
-            response.writeHead(201, { 'Content-Type': 'text/plain' });
-            response.end('okay');
-        });
-
-        this.node.keepAliveTimeout = 1000;
-        this.node.listen(this.port);
-
-        this.node.on('error', (error) => console.error(error.stack)); // eslint-disable-line no-console
-
-        this.node.on('connection', (socket) => socket.setTimeout(1500));
-
-        premise();
-
-        return this.node;
+    get interfaces() {
+        return fetch;
     }
-};
+}
+
+module.exports = GoforNode;

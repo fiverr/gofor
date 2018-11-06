@@ -19,12 +19,14 @@
     "lint": "eslint src lib",
     "prepublishOnly": "npm t && npm run lint"
   },
+  "dependencies": {
+    "node-fetch": "^2.2.1"
+  },
   "devDependencies": {
     "@fiverr/eslint-config-fiverr": "^1.0.0",
     "chai": "^4.1.2",
     "eslint": "^5.2.0",
     "eslint-plugin-react": "^7.10.0",
-    "mocha": "^5.2.0",
-    "node-fetch": "^2.2.0"
+    "mocha": "^5.2.0"
   }
 }

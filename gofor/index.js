@@ -51,7 +51,7 @@ class Gofor {
 
     get supportsHeaders() {
         try {
-            return this.interfaces.Headers.prototype.entries === 'function';
+            return typeof this.interfaces.Headers.prototype.entries === 'function';
         } catch (e) {
             return false;
         }

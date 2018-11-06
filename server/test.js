@@ -1,18 +1,20 @@
 const TestServer = require('./');
 const PORT = 3344;
 const testServer = new TestServer(PORT);
-const goforFactory = require('../');
+const Gofor = require('..');
 
 describe('E2E test', () => {
     describe('Headers', () => {
         describe('As object literals', () => {
 
             it('accepts headers as an object literal (defaults)', (done) => {
-                const gofor = goforFactory({headers: {'X-Custom-Header': 'Custom-Value'}});
+                const gofor = new Gofor({
+                    headers: {'X-Custom-Header': 'Custom-Value'}
+                });
 
                 testServer.exec(
                     () => {
-                        gofor(`http://localhost:${PORT}`)
+                        gofor.fetch(`http://localhost:${PORT}`)
                             .catch((error) => {
                                 assert(false, error);
                                 done();
@@ -26,11 +28,13 @@ describe('E2E test', () => {
             });
 
             it('accepts headers as an object literal (supplied)', (done) => {
-                const gofor = goforFactory({headers: {'X-Custom-Header': 'Custom-Value'}});
+                const gofor = new Gofor({
+                    headers: {'X-Custom-Header': 'Custom-Value'}
+                });
 
                 testServer.exec(
                     () => {
-                        gofor(`http://localhost:${PORT}`, {headers: {'X-Custom-Header-A': 'Custom-Value-A'}})
+                        gofor.fetch(`http://localhost:${PORT}`, {headers: {'X-Custom-Header-A': 'Custom-Value-A'}})
                             .catch((error) => {
                                 assert(false, error);
                                 done();
@@ -45,11 +49,13 @@ describe('E2E test', () => {
             });
 
             it('supplied headers *RUN OVER* defaults', (done) => {
-                const gofor = goforFactory({headers: {'X-Custom-Header': 'Custom-Value'}});
+                const gofor = new Gofor({
+                    headers: {'X-Custom-Header': 'Custom-Value'}
+                });
 
                 testServer.exec(
                     () => {
-                        gofor(`http://localhost:${PORT}`, {headers: {'X-Custom-Header-A': 'Custom-Value-A',
+                        gofor.fetch(`http://localhost:${PORT}`, {headers: {'X-Custom-Header-A': 'Custom-Value-A',
                             'X-Custom-Header': 'Custom-Value-X'}})
                             .catch((error) => {
                                 assert(false, error);
@@ -66,17 +72,15 @@ describe('E2E test', () => {
         });
 
         describe('As a Headers instance', () => {
-
-
             it('accepts headers a Headers instance (defaults)', (done) => {
                 const headers = new Headers();
                 headers.append('X-Custom-Header', 'Custom-Value');
 
-                const gofor = goforFactory({headers});
+                const gofor = new Gofor({headers});
 
                 testServer.exec(
                     () => {
-                        gofor(`http://localhost:${PORT}`)
+                        gofor.fetch(`http://localhost:${PORT}`)
                             .catch((error) => {
                                 assert(false, error);
                                 done();
@@ -90,14 +94,14 @@ describe('E2E test', () => {
             });
 
             it('accepts headers a Headers instance (supplied)', (done) => {
-                const gofor = goforFactory();
+                const gofor = new Gofor();
 
                 const headers = new Headers();
                 headers.append('X-Custom-Header', 'Custom-Value');
 
                 testServer.exec(
                     () => {
-                        gofor(`http://localhost:${PORT}`, {headers})
+                        gofor.fetch(`http://localhost:${PORT}`, {headers})
                             .catch((error) => {
                                 assert(false, error);
                                 done();
@@ -118,11 +122,11 @@ describe('E2E test', () => {
                 supplied.append('X-Custom-Header', 'Custom-Value-X');
                 supplied.append('X-Custom-Header-A', 'Custom-Value-A');
 
-                const gofor = goforFactory({headers});
+                const gofor = new Gofor({headers});
 
                 testServer.exec(
                     () => {
-                        gofor(`http://localhost:${PORT}`, {headers: supplied})
+                        gofor.fetch(`http://localhost:${PORT}`, {headers: supplied})
                             .catch((error) => {
                                 assert(false, error);
                                 done();

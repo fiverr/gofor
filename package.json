@@ -14,8 +14,8 @@
   },
   "main": "gofor/index.js",
   "scripts": {
-    "test": "mocha test.js **/test.js --inspect --require test-helpers.js",
-    "test:single": "mocha --inspect --require test-helpers.js",
+    "test": "mocha test.js **/test.js --inspect --require configuration/test_setup.js",
+    "test:single": "mocha --inspect --require configuration/test_setup.js",
     "lint": "eslint -c .eslintrc '*.js' '**/*.js'",
     "prepublishOnly": "npm t && npm run lint"
   },

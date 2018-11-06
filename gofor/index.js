@@ -50,9 +50,13 @@ class Gofor {
     }
 
     get supportsHeaders() {
-        const { Headers } = this.interfaces;
+        try {
+            const { Headers } = this.interfaces;
 
-        return typeof Headers === 'function' && Headers.prototype && typeof Headers.prototype.entries === 'function';
+            return typeof Headers !== 'undefined' && Headers.prototype && typeof Headers.prototype.entries === 'function';
+        } catch (e) {
+            return false;
+        }
     }
 
     /**
@@ -131,9 +135,8 @@ class Gofor {
     }
 
     toHeaders(headers) {
-        const { Headers } = this.interfaces;
-
         if (headers && typeof headers === 'object' && this.supportsHeaders && !(headers instanceof Headers)) {
+            const { Headers } = this.interfaces;
             const result = new Headers();
 
             Object.keys(headers).forEach(
@@ -147,13 +150,13 @@ class Gofor {
     }
 
     mergeHeaders(submitted) {
-        const { Headers } = this.interfaces;
         const defaults = this.defaults.headers;
 
         if (!this.supportsHeaders) {
             return Object.assign({}, defaults, submitted);
         }
 
+        const { Headers } = this.interfaces;
         const headers = new Headers();
         const keys = [];
 

@@ -18,10 +18,10 @@ describe('Gofor', () => {
             );
         });
 
-        it('Shoots a fetch request', async () => {
-            const res = await gofor.fetch('https://www.fiverr.com/dragon');
+        it('Shoots a fetch request', async() => {
+            const res = await gofor.fetch('http://httpbin.org/get?param=value');
 
-            assert.match(res.url, /^https:\/\/\w{0,7}\.fiverr\.com/);
+            assert.equal((await res.json()).args.param, 'value');
         });
     });
 });

@@ -51,9 +51,7 @@ class Gofor {
 
     get supportsHeaders() {
         try {
-            const { Headers } = this.interfaces;
-
-            return typeof Headers !== 'undefined' && Headers.prototype && typeof Headers.prototype.entries === 'function';
+            return this.interfaces.Headers.prototype.entries === 'function';
         } catch (e) {
             return false;
         }
@@ -65,9 +63,7 @@ class Gofor {
      * @readonly
      */
     get defaults() {
-        this[defaultsKey] = this[defaultsKey] || this.getDefaults();
-
-        return this[defaultsKey];
+        return this[defaultsKey] = this[defaultsKey] || this.getDefaults();
     }
 
     set defaults(obj) {

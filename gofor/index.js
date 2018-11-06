@@ -8,7 +8,7 @@
  * defaults symbol to be used as a private member
  * @type {Symbol}
  */
-const defaults = typeof Symbol === 'function' ? Symbol() : '_defaults';
+const defaultsKey = typeof Symbol === 'function' ? Symbol() : '_defaults';
 
 const iterate = require('../lib/iterate');
 
@@ -18,7 +18,7 @@ const iterate = require('../lib/iterate');
  *
  * @param  {Object|Function} def Either the default headers or a method to be called one time and returns the default headers object
  */
-module.exports = class Gofor {
+class Gofor {
     constructor(defaults = {}) {
         this.defineDefaults(defaults);
 
@@ -61,9 +61,9 @@ module.exports = class Gofor {
      * @readonly
      */
     get defaults() {
-        this[defaults] = this[defaults] || this.getDefaults();
+        this[defaultsKey] = this[defaultsKey] || this.getDefaults();
 
-        return this[defaults];
+        return this[defaultsKey];
     }
 
     set defaults(obj) {
@@ -72,7 +72,7 @@ module.exports = class Gofor {
 
     defineDefaults(defaults) {
         if (typeof defaults === 'function') {
-            this[defaults] = null;
+            this[defaultsKey] = null;
             this.getDefaults = () => {
                 const res = defaults();
 
@@ -85,7 +85,7 @@ module.exports = class Gofor {
                 return res;
             };
         } else {
-            this[defaults] = defaults;
+            this[defaultsKey] = defaults;
             this.convertHeaders();
             this.getDefaults = () => {
                 throw new TypeError('Gofor Error: Defaults have already been defined');
@@ -115,9 +115,9 @@ module.exports = class Gofor {
     }
 
     config(opts = null) {
-        this[defaults] = this.setOptions(opts);
+        this[defaultsKey] = this.setOptions(opts);
 
-        return this[defaults];
+        return this[defaultsKey];
     }
 
     /**
@@ -125,8 +125,8 @@ module.exports = class Gofor {
      * no return value
      */
     convertHeaders() {
-        if (this[defaults] && this[defaults].headers) {
-            this[defaults].headers = this.toHeaders(this[defaults].headers);
+        if (this[defaultsKey] && this[defaultsKey].headers) {
+            this[defaultsKey].headers = this.toHeaders(this[defaultsKey].headers);
         }
     }
 
@@ -168,4 +168,6 @@ module.exports = class Gofor {
 
         return headers;
     }
-};
+}
+
+module.exports = Gofor;

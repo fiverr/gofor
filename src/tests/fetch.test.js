@@ -21,7 +21,7 @@ describe('Gofor', () => {
         it('Shoots a fetch request', async () => {
             const res = await gofor.fetch('https://www.fiverr.com/dragon');
 
-            assert.include(res.url, 'https://www.fiverr.com');
+            assert.match(res.url, /^https:\/\/\w{0,7}\.fiverr\.com/);
         });
     });
 });

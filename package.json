@@ -10,13 +10,13 @@
     "url": "git+https://github.com/fiverr/gofor.git"
   },
   "engines": {
-    "node": ">=6.9.4"
+    "node": ">=8.9.0"
   },
-  "main": "gofor/index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "mocha --opts configuration/mocha.opts **/test.js **/*.test.js",
     "test:single": "mocha --opts configuration/mocha.opts ",
-    "lint": "eslint -c .eslintrc '*.js' '**/*.js'",
+    "lint": "eslint src lib",
     "prepublishOnly": "npm t && npm run lint"
   },
   "devDependencies": {

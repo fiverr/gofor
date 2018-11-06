@@ -44,7 +44,6 @@ jobs:
           command: npx published
   glossary:
     <<: *defaults
-    machine: true
     steps:
       - run:
           name: Add to Glossary

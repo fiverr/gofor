@@ -1,13 +1,12 @@
 defaults: &defaults
   working_directory: ~/app
+  docker:
+      - image: circleci/node:8
 
 version: 2
 jobs:
   install:
     <<: *defaults
-    docker:
-      - image: circleci/node:6.11.5
-      - image: circleci/node:8
     steps:
       - checkout
       - restore_cache:
@@ -21,9 +20,6 @@ jobs:
             - ./node_modules
   test:
     <<: *defaults
-    docker:
-      - image: circleci/node:6.11.5
-      - image: circleci/node:8
     steps:
       - checkout
       - restore_cache:
@@ -36,8 +32,6 @@ jobs:
           command: npm run lint
   publish:
     <<: *defaults
-    docker:
-      - image: circleci/node:8
     steps:
       - checkout
       - restore_cache:
@@ -50,7 +44,6 @@ jobs:
           command: npx published
   glossary:
     <<: *defaults
-    machine: true
     steps:
       - run:
           name: Add to Glossary

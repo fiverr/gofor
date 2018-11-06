@@ -18,15 +18,10 @@ describe('Gofor', () => {
             );
         });
 
-        it('Shoots a fetch request', (done) => {
-            gofor.fetch('https://www.fiverr.com')
-                .then((res) => {
-                    assert.include(res.url, 'https://www.fiverr.com');
-                    done();
-                }).catch((error) => {
-                    catcher(error);
-                    done();
-                });
+        it('Shoots a fetch request', async () => {
+            const res = await gofor.fetch('https://www.fiverr.com/dragon');
+
+            assert.include(res.url, 'https://www.fiverr.com');
         });
     });
 });

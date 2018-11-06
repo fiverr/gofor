@@ -5,10 +5,21 @@
  */
 
 /**
- * defaults symbol to be used as a private member
- * @type {Symbol}
+ * A Symbol-like primitive.
+ * @typedef {(Symbol|String)} SymbolLike
+ */
+
+/**
+ * Defaults private key.
+ * @type {SymbolLike}
  */
 const defaultsKey = typeof Symbol === 'function' ? Symbol() : '_defaults';
+
+/**
+ * defaults symbol to be used as a private member
+ * @type {SymbolLike}
+ */
+const defineDefaults = typeof Symbol === 'function' ? Symbol() : '_defineDefaults';
 
 const iterate = require('../lib/iterate');
 
@@ -20,7 +31,7 @@ const iterate = require('../lib/iterate');
  */
 class Gofor {
     constructor(defaults = {}) {
-        this.defineDefaults(defaults);
+        this[defineDefaults](defaults);
 
         /**
          * fetch wrapper
@@ -68,29 +79,6 @@ class Gofor {
 
     set defaults(obj) {
         throw new RangeError('Gofor Error: Modifying a Gofor instance defaults is not allowed');
-    }
-
-    defineDefaults(defaults) {
-        if (typeof defaults === 'function') {
-            this[defaultsKey] = null;
-            this.getDefaults = () => {
-                const res = defaults();
-
-                if (typeof res !== 'object' || res === null) {
-                    throw new TypeError('Gofor Error: Defaults getter must return an object');
-                }
-
-                this.convertHeaders();
-
-                return res;
-            };
-        } else {
-            this[defaultsKey] = defaults;
-            this.convertHeaders();
-            this.getDefaults = () => {
-                throw new TypeError('Gofor Error: Defaults have already been defined');
-            };
-        }
     }
 
     /**
@@ -166,6 +154,29 @@ class Gofor {
         });
 
         return headers;
+    }
+
+    [defineDefaults](defaults) {
+        if (typeof defaults === 'function') {
+            this[defaultsKey] = null;
+            this.getDefaults = () => {
+                const res = defaults();
+
+                if (typeof res !== 'object' || res === null) {
+                    throw new TypeError('Gofor Error: Defaults getter must return an object');
+                }
+
+                this.convertHeaders();
+
+                return res;
+            };
+        } else {
+            this[defaultsKey] = defaults;
+            this.convertHeaders();
+            this.getDefaults = () => {
+                throw new TypeError('Gofor Error: Defaults have already been defined');
+            };
+        }
     }
 }
 

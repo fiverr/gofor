@@ -1,6 +1,3 @@
 .*
-test.js
-test-helpers.js
 **/test.js
-server
-!readme.md
+**/*.test.js

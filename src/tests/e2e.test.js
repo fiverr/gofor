@@ -120,6 +120,7 @@ describe('E2E test', () => {
 
                 const supplied = new Headers();
                 supplied.append('X-Custom-Header', 'Custom-Value-X');
+                supplied.append('X-Custom-Header', 'Custom-Value-Y');
                 supplied.append('X-Custom-Header-A', 'Custom-Value-A');
 
                 const gofor = new Gofor({headers});
@@ -133,7 +134,7 @@ describe('E2E test', () => {
                             });
                     },
                     (request) => {
-                        expect(request.headers['x-custom-header']).to.equal('Custom-Value-X');
+                        expect(request.headers['x-custom-header']).to.equal('Custom-Value-X, Custom-Value-Y');
                         expect(request.headers['x-custom-header-a']).to.equal('Custom-Value-A');
                     },
                     done

@@ -4,23 +4,65 @@
  * @requires iterate
  */
 
+const iterate = require('../lib/iterate');
+
 /**
- * defaults symbol to be used as a private member
- * @type {Symbol}
+ * A Symbol-like primitive.
+ * @typedef {(Symbol|String)} SymbolLike
+ */
+
+/**
+ * Defaults private key.
+ * @type {SymbolLike}
  */
 const defaultsKey = typeof Symbol === 'function' ? Symbol() : '_defaults';
 
-const iterate = require('../lib/iterate');
+/**
+ * Get defaults method private key.
+ * @type {SymbolLike}
+ */
+const getDefaults = typeof Symbol === 'function' ? Symbol() : '_getDefaults';
+
+/**
+ * Defines the defaults' initial values, and the instance's getDefaults method.
+ * @param {Function|Object} defaults
+ */
+function defineDefaults(defaults) {
+    if (typeof defaults === 'function') {
+        this[defaultsKey] = null;
+        this[getDefaults] = () => {
+            const res = defaults();
+
+            if (typeof res !== 'object' || res === null) {
+                throw new TypeError('Gofor Error: Defaults getter must return an object');
+            }
+
+            this.convertHeaders();
+
+            return res;
+        };
+    } else {
+        this[defaultsKey] = defaults;
+        this.convertHeaders();
+        this[getDefaults] = () => {
+            throw new TypeError('Gofor Error: Defaults have already been defined');
+        };
+    }
+}
 
 /**
  * @class Gofor
  * @classdesc Returns a wrapper with a "fetch" method decorator that *reverse merges* default headers
  *
- * @param  {Object|Function} def Either the default headers or a method to be called one time and returns the default headers object
+ * @param    {Object|Function} defaults Default options to be used for each request.
+ * @property {Function}        fetcher The function used to perform requests.
+ * @property {Object}          interfaces The request interface constructors.
+ * @property {Boolean}         supportsHeaders Whether the Headers constructor is available or not.
+ * @property {Object}          defaults The default options.
  */
 class Gofor {
     constructor(defaults = {}) {
-        this.defineDefaults(defaults);
+        defineDefaults.call(this, defaults);
 
         /**
          * fetch wrapper
@@ -29,7 +71,7 @@ class Gofor {
          * @return {Promise}          A fetch promise
          */
         this.fetch = (...args) => {
-            args[1] = this.setOptions(args[1]);
+            args[1] = this.mergeOptions(args[1]);
 
             return this.fetcher(...args);
         };
@@ -57,48 +99,20 @@ class Gofor {
         }
     }
 
-    /**
-     * @member defaults
-     * @type {Object} Default headers
-     * @readonly
-     */
     get defaults() {
-        return this[defaultsKey] = this[defaultsKey] || this.getDefaults();
+        return this[defaultsKey] = this[defaultsKey] || this[getDefaults]();
     }
 
     set defaults(obj) {
         throw new RangeError('Gofor Error: Modifying a Gofor instance defaults is not allowed');
     }
 
-    defineDefaults(defaults) {
-        if (typeof defaults === 'function') {
-            this[defaultsKey] = null;
-            this.getDefaults = () => {
-                const res = defaults();
-
-                if (typeof res !== 'object' || res === null) {
-                    throw new TypeError('Gofor Error: Defaults getter must return an object');
-                }
-
-                this.convertHeaders();
-
-                return res;
-            };
-        } else {
-            this[defaultsKey] = defaults;
-            this.convertHeaders();
-            this.getDefaults = () => {
-                throw new TypeError('Gofor Error: Defaults have already been defined');
-            };
-        }
-    }
-
     /**
-     * setOptions
-     * @param  {Object} opts[] Options to be supplemented with defaults
-     * @return {Object} Original options supplemented with defaults
+     * Merges the provided options with the current ones, preferring the provided options.
+     * @param  {Object} [opts] Options to be supplemented with defaults.
+     * @return {Object}
      */
-    setOptions(opts = null) {
+    mergeOptions(opts = null) {
         if (!opts) {
             return this.defaults;
         }
@@ -114,8 +128,12 @@ class Gofor {
         return options;
     }
 
+    /**
+     * Modify the default options
+     * @param {Object} opts The new options to set.
+     */
     config(opts = null) {
-        this[defaultsKey] = this.setOptions(opts);
+        this[defaultsKey] = this.mergeOptions(opts);
 
         return this[defaultsKey];
     }
@@ -130,6 +148,11 @@ class Gofor {
         }
     }
 
+    /**
+     * Converts a headers object to a Headers instance.
+     * @param  {Object}  headers
+     * @return {Headers}
+     */
     toHeaders(headers) {
         if (headers && typeof headers === 'object' && this.supportsHeaders && !(headers instanceof Headers)) {
             const { Headers } = this.interfaces;
@@ -145,6 +168,11 @@ class Gofor {
         return headers;
     }
 
+    /**
+     * Merges the provided headers with the default headers, preferring the provided over the defaults.
+     * @param  {Object|Headers} submitted
+     * @return {Headers}
+     */
     mergeHeaders(submitted) {
         const defaults = this.defaults.headers;
 

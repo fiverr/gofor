@@ -7,21 +7,16 @@
 const iterate = require('../lib/iterate');
 
 /**
- * A Symbol-like primitive.
- * @typedef {(Symbol|String)} SymbolLike
- */
-
-/**
  * Defaults private key.
- * @type {SymbolLike}
+ * @type {Symbol}
  */
-const defaultsKey = typeof Symbol === 'function' ? Symbol() : '_defaults';
+const defaultsKey = Symbol();
 
 /**
  * Get defaults method private key.
- * @type {SymbolLike}
+ * @type {Symbol}
  */
-const getDefaults = typeof Symbol === 'function' ? Symbol() : '_getDefaults';
+const getDefaults = Symbol();
 
 /**
  * Defines the defaults' initial values, and the instance's getDefaults method.
@@ -55,6 +50,7 @@ function defineDefaults(defaults) {
  * @classdesc Returns a wrapper with a "fetch" method decorator that *reverse merges* default headers
  *
  * @param    {Object|Function} defaults Default options to be used for each request.
+ * @classProperty {Function}   gofor a fresh fetcher instance
  * @property {Function}        fetcher The function used to perform requests.
  * @property {Object}          interfaces The request interface constructors.
  * @property {Boolean}         supportsHeaders Whether the Headers constructor is available or not.
@@ -135,11 +131,10 @@ class Gofor {
     /**
      * Modify the default options
      * @param {Object} opts The new options to set.
+     * no return value
      */
     config(opts = null) {
-        this[defaultsKey] = this.mergeOptions(opts);
-
-        return this[defaultsKey];
+        defineDefaults.call(this, opts);
     }
 
     /**

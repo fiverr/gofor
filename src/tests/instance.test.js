@@ -1,4 +1,5 @@
-const {gofor} = Gofor = require('..');
+const Gofor = require('..');
+const {gofor} = Gofor;
 
 describe('gofor', () => {
     it('Should import an instance of Gofor', () => {
@@ -9,4 +10,4 @@ describe('gofor', () => {
         const b = Gofor.gofor;
         assert.notEqual(a, b);
     });
-})
+});

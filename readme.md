@@ -1,6 +1,6 @@
 # gofor [![](https://img.shields.io/npm/v/@fiverr/gofor.svg)](https://www.npmjs.com/package/@fiverr/gofor) [![](https://img.shields.io/circleci/project/github/fiverr/gofor.svg)](https://circleci.com/gh/fiverr/gofor)
 
-Gofor's fetch method is a lean [fetch decorator](https://developer.mozilla.org/en/docs/Web/API/Fetch_API) that *deep reverse merges* default options.
+Each Gofor instance exposes a fetch method: a lean [fetch decorator](https://developer.mozilla.org/en/docs/Web/API/Fetch_API) that *deep reverse merges* default options.
 
 Options you pass through in for each request will take precedence, but will supplemented with the defaults.
 

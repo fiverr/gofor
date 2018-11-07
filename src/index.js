@@ -79,6 +79,10 @@ class Gofor {
         this.fetch.config = this.config.bind(this);
     }
 
+    static get gofor() {
+        return new Gofor().fetch;
+    }
+
     get fetcher() {
         return fetch;
     }

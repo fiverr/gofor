@@ -1,28 +1,32 @@
-# gofor
+# gofor [![](https://img.shields.io/npm/v/@fiverr/gofor.svg)](https://www.npmjs.com/package/@fiverr/gofor) [![](https://img.shields.io/circleci/project/github/fiverr/gofor.svg)](https://circleci.com/gh/fiverr/gofor)
 
-[![](https://img.shields.io/npm/v/@fiverr/gofor.svg)](https://www.npmjs.com/package/@fiverr/gofor)
-[![](https://img.shields.io/circleci/project/github/fiverr/gofor.svg)](https://circleci.com/gh/fiverr/gofor)
-[![](https://badges.greenkeeper.io/fiverr/gofor.svg)](https://greenkeeper.io/)
+Each Gofor instance exposes a fetch method: a lean [fetch decorator](https://developer.mozilla.org/en/docs/Web/API/Fetch_API) that *deep reverse merges* default options.
 
-gofor is a (Gofor) factory interface for a lean fetch decorator that *deep reverse merges* default options.
-It means the headers you put in for each request will take precedence, but will supplemented with the defaults.
-It's fetch is [a fetch Promise](https://developer.mozilla.org/en/docs/Web/API/Fetch_API)
-
-The index is a factory, returning the wrapped fetch. It is recommended to use the factory method.
+Options you pass through in for each request will take precedence, but will supplemented with the defaults.
 
 ## Install
-`npm i -S @fiverr/gofor`
+```
+npm i -S @fiverr/gofor
+```
 
-## Use
-### Instances are usable straight "out of the box"
+## Using the constructor
 ```js
-const {gofor} = require('@fiverr/gofor');
-gofor('/page', {headers: {'X-Custom-Header': 'Custom-Value'}})
+const Gofor = require('@fiverr/gofor');
+const myGofor = new Gofor({headers: {'X-Custom-Header': 'Custom-Value'}});
+myGofor.fetch('/page')
     .then(...)
     .catch(...);
 ```
 
-### Get an instance and configure it:
+### "out of the box" usability with instances
+```js
+const {gofor} = require('@fiverr/gofor');
+gofor('/page').then(...); // This is the fetch
+gofor.config({headers: {'X-Custom-Header': 'Custom-Value'}});
+gofor('/page').then(...); // Now includes default settings
+```
+
+### Configuring an instance
 ```javascript
 const {gofor} = require('@fiverr/gofor');
 const defaultHeaders = new Headers();
@@ -79,13 +83,13 @@ const gofor2 = require('@fiverr/gofor').gofor;
 gofor1 === gofor2 // false
 ```
 
-### Gofor Factory: Create an instance using delayed configuration getter
-The function will be called once on first use, and its result will be memoised.
+### Delayed configuration
+The function will be called once on first use, and its result will be memoised. useful for cases where you need to pull information from the document and don't want to create a race condition.
 
 ```js
-const goforFactory = require('@fiverr/gofor');
+const {gofor} = require('@fiverr/gofor');
 
-const gofor = goforFactory(() => ({
+gofor.config(() => ({
     credentials: 'same-origin',
     headers: {
         'X-Requested-With': 'XMLHttpRequest',
@@ -97,19 +101,7 @@ const gofor = goforFactory(() => ({
 ```
 
 ## Node Runtime
-Gofor is designed for the browser, and depends on the fetch API.
-
-In order to use gofor in node, you must have a polyfill for [fetch](https://www.npmjs.com/package/node-fetch)].
-
+Gofor brings a pre baked node compatible flavour using [node-fetch](https://www.npmjs.com/package/node-fetch).
 ```js
-const fetch = require('node-fetch');
-const {Headers, Request, Response} = fetch;
-
-// Comply with browser environment
-Object.assign(global, {fetch, Headers, Request, Response});
+const {gofor} = require('@fiverr/gofor/node');
 ```
-
-## Troubleshooting
-
-#### `.entries is not a function`
- `Object.entries` is available in node version >= `7.5.0`,

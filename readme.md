@@ -105,3 +105,10 @@ Gofor brings a pre baked node compatible flavour using [node-fetch](https://www.
 ```js
 const {gofor} = require('gofor/node');
 ```
+
+## Bundled version
+Environments which exclude node_modules from the transpiling pipeline should include the "browser" entry instead of "main". This exposes a bundled ES5 commonjs module.
+
+Also available for explicit import:
+
+const {gofor} = require('gofor/dist');

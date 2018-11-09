@@ -19,7 +19,7 @@
     "prepublishOnly": "npm t && npm run lint"
   },
   "devDependencies": {
-    "@fiverr/eslint-config-fiverr": "^1.0.0",
+    "@fiverr/eslint-config-fiverr": "^2.0.0",
     "chai": "^4.1.2",
     "eslint": "^5.2.0",
     "eslint-plugin-react": "^7.10.0",

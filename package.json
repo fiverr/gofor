@@ -1,6 +1,6 @@
 {
   "name": "gofor",
-  "version": "2.0.0",
+  "version": "2.0.0-rc",
   "description": "lean fetch decorator that reverse merges default options",
   "author": "Fiverr",
   "license": "MIT",

@@ -1,17 +1,20 @@
-/**
- * @module parseHeaders
- * @private
- * @since 1.1.0
- *
- * Currently being used in test environment only
- */
+exports.defaults = () => ({
+    credentials: 'same-origin',
+    headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-Custom-Authentication': 'CUSTOM_VALUE',
+        'Content-Type': 'application/json; charset=utf-8',
+        'Accept': 'application/json'
+    }
+});
+
 
 /**
  * Convert Headers to object
  * @param  {Headers} headers
  * @return {Array<Object>} Array of key-value pairs
  */
-module.exports = function parseHeaders(headers = new Headers()) {
+exports.parseHeaders = (headers = new Headers()) => {
     if (!(headers instanceof Headers)) {
         throw new TypeError(`parseHeaders expected an instance of Headers but instead got a ${headers.constructor}`);
     }

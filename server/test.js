@@ -1,140 +1,26 @@
-const TestServer = require('./');
-const PORT = 3344;
-const testServer = new TestServer(PORT);
-const goforFactory = require('../');
+const fetch = require('node-fetch');
+const GoforNode = require('.');
 
-describe('E2E test', () => {
-    describe('Headers', () => {
-        describe('As object literals', () => {
+describe('Gofor/node', () => {
+    const gofor = new GoforNode();
 
-            it('accepts headers as an object literal (defaults)', (done) => {
-                const gofor = goforFactory({headers: {'X-Custom-Header': 'Custom-Value'}});
+    it('Implements node-fetch as the fetcher utility', () => {
+        assert.equal(
+            gofor.fetcher,
+            fetch
+        );
+    });
 
-                testServer.exec(
-                    () => {
-                        gofor(`http://localhost:${PORT}`)
-                            .catch((error) => {
-                                assert(false, error);
-                                done();
-                            });
-                    },
-                    (request) => {
-                        assert.equal(request.headers['x-custom-header'], 'Custom-Value');
-                        done();
-                    }
-                );
-            });
-
-            it('accepts headers as an object literal (supplied)', (done) => {
-                const gofor = goforFactory({headers: {'X-Custom-Header': 'Custom-Value'}});
-
-                testServer.exec(
-                    () => {
-                        gofor(`http://localhost:${PORT}`, {headers: {'X-Custom-Header-A': 'Custom-Value-A'}})
-                            .catch((error) => {
-                                assert(false, error);
-                                done();
-                            });
-                    },
-                    (request) => {
-                        assert.equal(request.headers['x-custom-header'], 'Custom-Value');
-                        assert.equal(request.headers['x-custom-header-a'], 'Custom-Value-A');
-                        done();
-                    }
-                );
-            });
-
-            it('supplied headers *RUN OVER* defaults', (done) => {
-                const gofor = goforFactory({headers: {'X-Custom-Header': 'Custom-Value'}});
-
-                testServer.exec(
-                    () => {
-                        gofor(`http://localhost:${PORT}`, {headers: {'X-Custom-Header-A': 'Custom-Value-A',
-                            'X-Custom-Header': 'Custom-Value-X'}})
-                            .catch((error) => {
-                                assert(false, error);
-                                done();
-                            });
-                    },
-                    (request) => {
-                        assert.equal(request.headers['x-custom-header'], 'Custom-Value-X');
-                        assert.equal(request.headers['x-custom-header-a'], 'Custom-Value-A');
-                        done();
-                    }
-                );
-            });
-        });
-
-        describe('As a Headers instance', () => {
-
-
-            it('accepts headers a Headers instance (defaults)', (done) => {
-                const headers = new Headers();
-                headers.append('X-Custom-Header', 'Custom-Value');
-
-                const gofor = goforFactory({headers});
-
-                testServer.exec(
-                    () => {
-                        gofor(`http://localhost:${PORT}`)
-                            .catch((error) => {
-                                assert(false, error);
-                                done();
-                            });
-                    },
-                    (request) => {
-                        expect(request.headers['x-custom-header']).to.equal('Custom-Value');
-                    },
-                    done
-                );
-            });
-
-            it('accepts headers a Headers instance (supplied)', (done) => {
-                const gofor = goforFactory();
-
-                const headers = new Headers();
-                headers.append('X-Custom-Header', 'Custom-Value');
-
-                testServer.exec(
-                    () => {
-                        gofor(`http://localhost:${PORT}`, {headers})
-                            .catch((error) => {
-                                assert(false, error);
-                                done();
-                            });
-                    },
-                    (request) => {
-                        expect(request.headers['x-custom-header']).to.equal('Custom-Value');
-                    },
-                    done
-                );
-            });
-
-            it('supplied headers *RUN OVER* defaults', (done) => {
-                const headers = new Headers();
-                headers.append('X-Custom-Header', 'Custom-Value');
-
-                const supplied = new Headers();
-                supplied.append('X-Custom-Header', 'Custom-Value-X');
-                supplied.append('X-Custom-Header-A', 'Custom-Value-A');
-
-                const gofor = goforFactory({headers});
-
-                testServer.exec(
-                    () => {
-                        gofor(`http://localhost:${PORT}`, {headers: supplied})
-                            .catch((error) => {
-                                assert(false, error);
-                                done();
-                            });
-                    },
-                    (request) => {
-                        expect(request.headers['x-custom-header']).to.equal('Custom-Value-X');
-                        expect(request.headers['x-custom-header-a']).to.equal('Custom-Value-A');
-                    },
-                    done
-                );
-            });
+    it('Implements node-fetch interface constructors', () => {
+        [
+            'Headers',
+            'Request',
+            'Response'
+        ].forEach((constructor) => {
+            assert.equal(
+                gofor.interfaces[constructor],
+                fetch[constructor]
+            );
         });
     });
 });

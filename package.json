@@ -1,7 +1,18 @@
 {
-  "name": "@fiverr/gofor",
-  "version": "1.2.0",
+  "name": "gofor",
+  "version": "2.0.0",
   "description": "lean fetch decorator that reverse merges default options",
+  "keywords": [
+    "fetch",
+    "node-fetch",
+    "isomorphic",
+    "browser",
+    "xhr",
+    "ajax",
+    "http",
+    "request",
+    "promise"
+  ],
   "author": "Fiverr",
   "license": "MIT",
   "homepage": "https://github.com/fiverr/gofor#readme",
@@ -10,20 +21,31 @@
     "url": "git+https://github.com/fiverr/gofor.git"
   },
   "engines": {
-    "node": ">=6.9.4"
+    "node": ">=8.9.0"
   },
-  "main": "index.js",
+  "main": "src/index.js",
+  "browser": "dist/index.js",
   "scripts": {
-    "test": "mocha test.js **/test.js --inspect --require test-helpers.js",
-    "lint": "eslint -c .eslintrc '*.js' '**/*.js'",
+    "start": "npm run build -- --watch",
+    "build": "webpack --config configuration/webpack.config",
+    "test": "mocha --opts configuration/mocha.opts **/test.js **/*.test.js",
+    "test:single": "mocha --opts configuration/mocha.opts ",
+    "lint": "eslint src lib",
     "prepublishOnly": "npm t && npm run lint"
   },
+  "dependencies": {
+    "node-fetch": "^2.2.1"
+  },
   "devDependencies": {
-    "@fiverr/eslint-config-fiverr": "^1.0.0",
-    "chai": "^4.1.2",
-    "eslint": "^5.2.0",
-    "eslint-plugin-react": "^7.10.0",
+    "@babel/core": "^7.1.5",
+    "@babel/preset-env": "^7.1.5",
+    "@fiverr/eslint-config-fiverr": "^2.0.0",
+    "babel-loader": "^8.0.4",
+    "chai": "^4.2.0",
+    "eslint": "^5.9.0",
+    "eslint-plugin-react": "^7.11.1",
     "mocha": "^5.2.0",
-    "node-fetch": "^2.2.0"
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2"
   }
 }

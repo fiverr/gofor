@@ -1,0 +1,2 @@
+--inspect
+--require configuration/test_setup.js

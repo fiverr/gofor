@@ -1,7 +1,18 @@
 {
   "name": "gofor",
-  "version": "2.0.0-rc",
+  "version": "2.0.0",
   "description": "lean fetch decorator that reverse merges default options",
+  "keywords": [
+    "fetch",
+    "node-fetch",
+    "isomorphic",
+    "browser",
+    "xhr",
+    "ajax",
+    "http",
+    "request",
+    "promise"
+  ],
   "author": "Fiverr",
   "license": "MIT",
   "homepage": "https://github.com/fiverr/gofor#readme",

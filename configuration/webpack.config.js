@@ -9,7 +9,7 @@ module.exports = {
     output: {
         filename: 'index.js',
         path: join(base, 'dist'),
-        libraryTarget: 'umd',
+        libraryTarget: 'commonjs2',
         globalObject: 'typeof self !== \'undefined\' ? self : this'
     },
     module: {

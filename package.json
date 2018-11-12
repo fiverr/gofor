@@ -1,6 +1,6 @@
 {
   "name": "gofor",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "lean fetch decorator that reverse merges default options",
   "keywords": [
     "fetch",

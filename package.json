@@ -1,6 +1,6 @@
 {
   "name": "gofor",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "description": "lean fetch decorator that reverse merges default options",
   "keywords": [
     "fetch",
@@ -38,6 +38,12 @@
   },
   "devDependencies": {
     "@babel/core": "^7.1.5",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-proposal-json-strings": "^7.0.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
+    "@babel/plugin-syntax-import-meta": "^7.0.0",
+    "@babel/plugin-transform-parameters": "^7.1.0",
+    "@babel/plugin-transform-spread": "^7.0.0",
     "@babel/preset-env": "^7.1.5",
     "@fiverr/eslint-config-fiverr": "^2.0.0",
     "babel-loader": "^8.0.4",

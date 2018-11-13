@@ -80,7 +80,9 @@ class Gofor {
     }
 
     get fetcher() {
-        return fetch;
+        return function(...args) {
+            return fetch(...args);
+        };
     }
 
     get interfaces() {

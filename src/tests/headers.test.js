@@ -12,9 +12,10 @@ describe('Gofor', () => {
 
         it('When Headers is not available, new values override defaults', () => {
             delete require.cache[require.resolve('..')];
-            delete global.Headers;
+            global.Headers = null;
 
             const Gofor = require('..');
+
             let called = false;
 
             global.fetch = (url, {headers}) => {

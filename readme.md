@@ -103,7 +103,7 @@ gofor.config(() => ({
 ## Node Runtime
 Gofor brings a pre baked node compatible flavour using [node-fetch](https://www.npmjs.com/package/node-fetch).
 ```js
-const {gofor} = require('gofor/node');
+const {gofor} = require('gofor/server');
 ```
 
 ## Bundled version

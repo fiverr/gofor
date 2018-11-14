@@ -155,8 +155,8 @@ class Gofor {
      * @return {Headers}
      */
     toHeaders(headers) {
-        if (headers && typeof headers === 'object' && this.supportsHeaders && !(headers instanceof Headers)) {
-            const { Headers } = this.interfaces;
+        const { Headers } = this.interfaces;
+        if (headers && typeof headers === 'object' && this.supportsHeaders && Headers && !(headers instanceof Headers)) {
             const result = new Headers();
 
             Object.keys(headers).forEach(

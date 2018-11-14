@@ -8,7 +8,7 @@ describe('Gofor', () => {
 
         it('Does not convert headers when Headers is unavailable', () => {
             delete require.cache[require.resolve('..')];
-            delete global.Headers;
+            global.Headers = null;
             const Gofor = require('..');
             const gofor = new Gofor();
 

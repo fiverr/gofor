@@ -14,6 +14,10 @@ const Gofor = require('../src');
  * @param  {Object|Function} def Either the default headers or a method to be called one time and returns the default headers object
  */
 class GoforNode extends Gofor {
+    static get gofor() {
+        return new GoforNode().fetch;
+    }
+
     get fetcher() {
         return fetch;
     }

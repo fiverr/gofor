@@ -4,7 +4,7 @@
  * @requires gofor
  */
 
-const fetch = require('node-fetch');
+const fetch = require('node-fetch/lib');
 const Gofor = require('../src');
 
 /**

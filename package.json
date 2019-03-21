@@ -45,7 +45,7 @@
     "@babel/plugin-transform-parameters": "^7.1.0",
     "@babel/plugin-transform-spread": "^7.0.0",
     "@babel/preset-env": "^7.1.5",
-    "@fiverr/eslint-config-fiverr": "^2.0.0",
+    "@fiverr/eslint-config-fiverr": "^3.0.0",
     "babel-loader": "^8.0.4",
     "chai": "^4.2.0",
     "eslint": "^5.9.0",

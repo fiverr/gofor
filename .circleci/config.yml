@@ -40,9 +40,6 @@ jobs:
           name: Set NPM tokens
           command: echo -e $NPMRC > ~/.npmrc
       - run:
-          name: Build package
-          command: npm run build
-      - run:
           name: Publish to NPM
           command: npx published
   glossary:

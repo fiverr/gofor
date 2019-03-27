@@ -4,6 +4,7 @@
  * @requires iterate
  */
 
+const fetch = require('node-fetch');
 const iterate = require('../lib/iterate');
 
 /**
@@ -86,11 +87,7 @@ class Gofor {
     }
 
     get interfaces() {
-        return {
-            Headers,
-            Request,
-            Response
-        };
+        return fetch;
     }
 
     get supportsHeaders() {

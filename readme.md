@@ -1,6 +1,6 @@
 # gofor [![](https://img.shields.io/npm/v/gofor.svg)](https://www.npmjs.com/package/gofor) [![](https://img.shields.io/circleci/project/github/fiverr/gofor.svg)](https://circleci.com/gh/fiverr/gofor)
 
-Each Gofor instance exposes a fetch method: a lean [fetch decorator](https://developer.mozilla.org/en/docs/Web/API/Fetch_API) that *deep reverse merges* default options.
+Each Gofor instance exposes a fetch method: a lean, isomorphic [fetch decorator](https://developer.mozilla.org/en/docs/Web/API/Fetch_API) that *deep reverse merges* default options.
 
 Options you pass through in for each request will take precedence, but will supplemented with the defaults.
 
@@ -99,16 +99,3 @@ gofor.config(() => ({
     },
 }));
 ```
-
-## Node Runtime
-Gofor brings a pre baked node compatible flavour using [node-fetch](https://www.npmjs.com/package/node-fetch).
-```js
-const {gofor} = require('gofor/server');
-```
-
-## Bundled version
-Environments which exclude node_modules from the transpiling pipeline should include the "browser" entry instead of "main". This exposes a bundled ES5 commonjs module.
-
-Also available for explicit import:
-
-const {gofor} = require('gofor/dist');

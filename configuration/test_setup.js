@@ -1,3 +1,7 @@
+const fetch = require('node-fetch');
+
 Object.assign(global,
-    require('chai')
+    require('chai'),
+    fetch,
+    { fetch }
 );

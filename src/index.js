@@ -54,7 +54,6 @@ function defineDefaults(defaults) {
  * @classProperty {Function}   gofor a fresh fetcher instance
  * @property {Function}        fetcher The function used to perform requests.
  * @property {Object}          interfaces The request interface constructors.
- * @property {Boolean}         supportsHeaders Whether the Headers constructor is available or not.
  * @property {Object}          defaults The default options.
  */
 class Gofor {
@@ -88,14 +87,6 @@ class Gofor {
 
     get interfaces() {
         return fetch;
-    }
-
-    get supportsHeaders() {
-        try {
-            return typeof this.interfaces.Headers.prototype.entries === 'function';
-        } catch (e) {
-            return false;
-        }
     }
 
     get defaults() {
@@ -153,7 +144,7 @@ class Gofor {
      */
     toHeaders(headers) {
         const { Headers } = this.interfaces;
-        if (headers && typeof headers === 'object' && this.supportsHeaders && Headers && !(headers instanceof Headers)) {
+        if (headers && typeof headers === 'object' && Headers && !(headers instanceof Headers)) {
             const result = new Headers();
 
             Object.keys(headers).forEach(
@@ -173,11 +164,6 @@ class Gofor {
      */
     mergeHeaders(submitted) {
         const defaults = this.defaults.headers;
-
-        if (!this.supportsHeaders) {
-            return Object.assign({}, defaults, submitted);
-        }
-
         const { Headers } = this.interfaces;
         const headers = new Headers();
         const keys = [];

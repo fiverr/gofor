@@ -1,7 +1,7 @@
 {
   "name": "gofor",
-  "version": "2.0.5",
-  "description": "lean fetch decorator that reverse merges default options",
+  "version": "3.0.0",
+  "description": "Lean, isomorphic fetch decorator that reverse merges default options",
   "keywords": [
     "fetch",
     "node-fetch",
@@ -23,12 +23,9 @@
   "engines": {
     "node": ">=8.9.0"
   },
-  "main": "src/index.js",
-  "browser": "dist/index.js",
+  "main": "./src/index.js",
   "scripts": {
-    "start": "npm run build -- --watch",
-    "build": "webpack --config configuration/webpack.config",
-    "test": "mocha --opts configuration/mocha.opts **/test.js **/*.test.js",
+    "test": "mocha --opts configuration/mocha.opts './{,!(node_modules)/**}/test.js' './{,!(node_modules)/**}/*.test.js'",
     "test:single": "mocha --opts configuration/mocha.opts ",
     "lint": "eslint src lib",
     "prepublishOnly": "npm t && npm run lint"
@@ -37,21 +34,10 @@
     "node-fetch": "^2.2.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.1.5",
-    "@babel/plugin-proposal-class-properties": "^7.1.0",
-    "@babel/plugin-proposal-json-strings": "^7.0.0",
-    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
-    "@babel/plugin-syntax-import-meta": "^7.0.0",
-    "@babel/plugin-transform-parameters": "^7.1.0",
-    "@babel/plugin-transform-spread": "^7.0.0",
-    "@babel/preset-env": "^7.1.5",
     "@fiverr/eslint-config-fiverr": "^2.0.0",
-    "babel-loader": "^8.0.4",
     "chai": "^4.2.0",
     "eslint": "^5.9.0",
     "eslint-plugin-react": "^7.11.1",
-    "mocha": "^5.2.0",
-    "webpack": "^4.25.1",
-    "webpack-cli": "^3.1.2"
+    "mocha": "^5.2.0"
   }
 }

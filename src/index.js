@@ -4,6 +4,7 @@
  * @requires iterate
  */
 
+const fetch = require('node-fetch');
 const iterate = require('../lib/iterate');
 
 /**
@@ -51,9 +52,6 @@ function defineDefaults(defaults) {
  *
  * @param    {Object|Function} defaults Default options to be used for each request.
  * @classProperty {Function}   gofor a fresh fetcher instance
- * @property {Function}        fetcher The function used to perform requests.
- * @property {Object}          interfaces The request interface constructors.
- * @property {Boolean}         supportsHeaders Whether the Headers constructor is available or not.
  * @property {Object}          defaults The default options.
  */
 class Gofor {
@@ -69,7 +67,7 @@ class Gofor {
         this.fetch = (...args) => {
             args[1] = this.mergeOptions(args[1]);
 
-            return this.fetcher(...args);
+            return fetch(...args);
         };
 
         this.fetch.config = this.config.bind(this);
@@ -77,28 +75,6 @@ class Gofor {
 
     static get gofor() {
         return new Gofor().fetch;
-    }
-
-    get fetcher() {
-        return function(...args) {
-            return fetch(...args);
-        };
-    }
-
-    get interfaces() {
-        return {
-            Headers,
-            Request,
-            Response
-        };
-    }
-
-    get supportsHeaders() {
-        try {
-            return typeof this.interfaces.Headers.prototype.entries === 'function';
-        } catch (e) {
-            return false;
-        }
     }
 
     get defaults() {
@@ -155,8 +131,8 @@ class Gofor {
      * @return {Headers}
      */
     toHeaders(headers) {
-        const { Headers } = this.interfaces;
-        if (headers && typeof headers === 'object' && this.supportsHeaders && Headers && !(headers instanceof Headers)) {
+        const { Headers } = fetch;
+        if (headers && typeof headers === 'object' && Headers && !(headers instanceof Headers)) {
             const result = new Headers();
 
             Object.keys(headers).forEach(
@@ -176,12 +152,7 @@ class Gofor {
      */
     mergeHeaders(submitted) {
         const defaults = this.defaults.headers;
-
-        if (!this.supportsHeaders) {
-            return Object.assign({}, defaults, submitted);
-        }
-
-        const { Headers } = this.interfaces;
+        const { Headers } = fetch;
         const headers = new Headers();
         const keys = [];
 

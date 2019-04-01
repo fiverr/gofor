@@ -4,7 +4,6 @@
  * @requires iterate
  */
 
-const fetch = require('node-fetch');
 const iterate = require('../lib/iterate');
 
 /**
@@ -53,6 +52,8 @@ function defineDefaults(defaults) {
  * @param    {Object|Function} defaults Default options to be used for each request.
  * @classProperty {Function}   gofor a fresh fetcher instance
  * @property {Object}          defaults The default options.
+ * @property {Function}        fetcher The function used to perform requests.
+ * @property {Object}          interfaces The request interface constructors.
  */
 class Gofor {
     constructor(defaults = {}) {
@@ -67,7 +68,7 @@ class Gofor {
         this.fetch = (...args) => {
             args[1] = this.mergeOptions(args[1]);
 
-            return fetch(...args);
+            return this.fetcher(...args);
         };
 
         this.fetch.config = this.config.bind(this);
@@ -83,6 +84,20 @@ class Gofor {
 
     set defaults(obj) {
         throw new RangeError('Gofor Error: Modifying a Gofor instance defaults is not allowed');
+    }
+
+    get fetcher() {
+        return function(...args) {
+            return fetch(...args);
+        };
+    }
+
+    get interfaces() {
+        return {
+            Headers,
+            Request,
+            Response
+        };
     }
 
     /**
@@ -131,7 +146,7 @@ class Gofor {
      * @return {Headers}
      */
     toHeaders(headers) {
-        const { Headers } = fetch;
+        const { Headers } = this.interfaces;
         if (headers && typeof headers === 'object' && Headers && !(headers instanceof Headers)) {
             const result = new Headers();
 
@@ -152,7 +167,7 @@ class Gofor {
      */
     mergeHeaders(submitted) {
         const defaults = this.defaults.headers;
-        const { Headers } = fetch;
+        const { Headers } = this.interfaces;
         const headers = new Headers();
         const keys = [];
 

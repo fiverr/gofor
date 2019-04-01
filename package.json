@@ -1,6 +1,6 @@
 {
   "name": "gofor",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Lean, isomorphic fetch decorator that reverse merges default options",
   "keywords": [
     "fetch",
@@ -23,7 +23,8 @@
   "engines": {
     "node": ">=8.9.0"
   },
-  "main": "./src/index.js",
+  "main": "./src/server.js",
+  "browser": "./src/browser.js",
   "scripts": {
     "test": "mocha --opts configuration/mocha.opts './{,!(node_modules)/**}/test.js' './{,!(node_modules)/**}/*.test.js'",
     "test:single": "mocha --opts configuration/mocha.opts ",

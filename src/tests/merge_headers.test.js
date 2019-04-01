@@ -1,4 +1,4 @@
-const Gofor = require('..');
+const Gofor = require('../browser');
 
 const { parseHeaders } = require('./helpers');
 

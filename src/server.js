@@ -1,6 +1,6 @@
 /**
  * @module gofor/node
- * @since 2.0.0
+ * @since 3.0.2
  * @requires gofor
  */
 

@@ -88,7 +88,8 @@ class Gofor {
 
     get fetcher() {
         return function(...args) {
-            return fetch.apply(window, args);
+            // eslint-disable-next-line no-useless-call
+            return window.fetch.call(window, ...args);
         };
     }
 

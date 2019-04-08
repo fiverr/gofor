@@ -68,7 +68,7 @@ class Gofor {
         this.fetch = (...args) => {
             args[1] = this.mergeOptions(args[1]);
 
-            return this.fetcher.apply(window, args);
+            return this.fetcher(...args);
         };
 
         this.fetch.config = this.config.bind(this);
@@ -88,7 +88,7 @@ class Gofor {
 
     get fetcher() {
         return function(...args) {
-            return fetch(...args);
+            return fetch.apply(window, args);
         };
     }
 

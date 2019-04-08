@@ -5,3 +5,11 @@ Object.assign(global,
     fetch,
     { fetch }
 );
+
+global.window = {};
+Object.assign(global.window,
+    fetch,
+    {
+        fetch: fetch.bind(global.window)
+    }
+);

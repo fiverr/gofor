@@ -88,15 +88,15 @@ class Gofor {
 
     get fetcher() {
         return function(...args) {
-            return fetch(...args);
+            return window.fetch(...args);
         };
     }
 
     get interfaces() {
         return {
-            Headers,
-            Request,
-            Response
+            Headers: window.Headers,
+            Request: window.Request,
+            Response: window.Response
         };
     }
 

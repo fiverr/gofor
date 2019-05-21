@@ -88,7 +88,7 @@ class Gofor {
 
     get fetcher() {
         return function(...args) {
-            return fetch(...args);
+            return fetch.apply(window, ...args);
         };
     }
 

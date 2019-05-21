@@ -68,7 +68,7 @@ class Gofor {
         this.fetch = (...args) => {
             args[1] = this.mergeOptions(args[1]);
 
-            return this.fetcher(...args);
+            return this.fetcher.apply(window, args);
         };
 
         this.fetch.config = this.config.bind(this);

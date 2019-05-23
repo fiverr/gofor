@@ -6,6 +6,8 @@
 
 const iterate = require('../lib/iterate');
 
+const { globalScope } =require('@cocopina/environment');
+
 /**
  * Defaults private key.
  * @type {Symbol}
@@ -68,7 +70,7 @@ class Gofor {
         this.fetch = (...args) => {
             args[1] = this.mergeOptions(args[1]);
 
-            return this.fetcher.apply(window, args);
+            return this.fetcher.apply(globalScope, args);
         };
 
         this.fetch.config = this.config.bind(this);

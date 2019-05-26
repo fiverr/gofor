@@ -1,6 +1,6 @@
 {
   "name": "gofor",
-  "version": "3.0.4",
+  "version": "3.0.5",
   "description": "Lean, isomorphic fetch decorator that reverse merges default options",
   "keywords": [
     "fetch",
@@ -32,7 +32,7 @@
     "prepublishOnly": "npm t && npm run lint"
   },
   "dependencies": {
-    "@cocopina/environment": "^1.0.3",
+    "@cocopina/environment": "^1.0.4",
     "node-fetch": "^2.2.1"
   },
   "devDependencies": {

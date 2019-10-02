@@ -1,4 +1,5 @@
 const TestServer = require('../../configuration/test_server');
+
 const PORT = 3344;
 const testServer = new TestServer(PORT);
 const Gofor = require('../browser');

@@ -1,6 +1,6 @@
 {
   "name": "gofor",
-  "version": "3.0.5",
+  "version": "3.0.6",
   "description": "Lean, isomorphic fetch decorator that reverse merges default options",
   "keywords": [
     "fetch",
@@ -33,13 +33,13 @@
   },
   "dependencies": {
     "@cocopina/environment": "^1.0.4",
-    "node-fetch": "^2.2.1"
+    "node-fetch": "^2.6.0"
   },
   "devDependencies": {
-    "@fiverr/eslint-config-fiverr": "^2.0.0",
+    "@fiverr/eslint-config-fiverr": "^3.1.3",
     "chai": "^4.2.0",
-    "eslint": "^5.9.0",
-    "eslint-plugin-react": "^7.11.1",
-    "mocha": "^5.2.0"
+    "eslint": "^6.5.1",
+    "eslint-plugin-react": "^7.15.1",
+    "mocha": "^6.2.1"
   }
 }

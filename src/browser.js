@@ -4,9 +4,9 @@
  * @requires iterate
  */
 
+const { globalScope } =require('@cocopina/environment');
 const iterate = require('../lib/iterate');
 
-const { globalScope } =require('@cocopina/environment');
 
 /**
  * Defaults private key.

@@ -39,7 +39,7 @@
     "@fiverr/eslint-config-fiverr": "^3.1.3",
     "chai": "^4.2.0",
     "eslint": "^6.5.1",
-    "eslint-plugin-react": "^7.15.1",
+    "eslint-plugin-react": "^7.18.2",
     "mocha": "^6.2.1"
   }
 }
